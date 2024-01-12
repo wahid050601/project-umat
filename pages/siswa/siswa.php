@@ -27,8 +27,11 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-body mt-4">
-          <a href="#" onclick="HtmlLoad('pages/siswa/add.php')" class="btn btn-primary btn-sm mb-3"><i class="fas fa-plus"></i> Tambah Siswa</a>
-          <a href="#" onclick="HtmlLoad('pages/siswa/add.php')" class="btn btn-success btn-sm mb-3"><i class="cloud-upload"></i> Upload</a>
+          <a href="#" onclick="HtmlLoad('pages/siswa/add.php')" class="btn btn-primary btn-sm mb-3"><i class="bi bi-plus"></i> Tambah Siswa</a>
+          <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-cloud-arrow-up-fill"></i>
+            Upload
+          </button>
+          <a href="template/template-siswa.xlsx" class="btn btn-success btn-sm mb-3"><i class="bi bi-download"></i> Download</a>
 
           <style>
               table {
@@ -86,6 +89,32 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">UPLOAD DATA SISWA</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form action="" method="POST" enctype="multipart/form-data" id="form_input_excel">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Pilih Template</label>
+            <input class="form-control" type="file" id="formFile" name="formFile" accept=".xls,xlsx">
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="uploadbutton">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 </section>
 
 <script>
@@ -121,5 +150,28 @@ $(".table-siswa").on("click", "#hapus", function(){
           })
       }
   })
+});
+$('#uploadbutton').on('click',function(){
+  var data_excel=new FormData($('#form_input_excel') [0]);
+  $.ajax({
+    method: "POST",
+    url: "pages/siswa/template.php",
+    data: data_excel,
+    success: function (response) {
+    if(response.status == 'sukses'){
+      alert("Berhasil")
+      $('.tampil').empty();
+      $('.tampil').load('pages/siswa/siswa.php');
+    }
+    else{
+      alert("Gagal")
+      $('.tampil').empty();
+      $('.tampil').load('pages/siswa/siswa.php');
+    }
+    },
+    error: function () {
+    alert("Gagal mengunggah file.");
+    }
+  });
 })
 </script>

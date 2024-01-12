@@ -23,11 +23,12 @@
             <div class="card">
                 <div class="card-body mt-4">
                     <div class="card-header bg-primary text-white">TAMBAH DATA SISWA</div>
-                    <form action="" method="POST" id="formsiswa">
-                        
-                        <!-- INI Kiri -->
                         <div class="row">
                             <div class="col-lg-6">
+
+                        <!-- INI Kiri -->
+                        <form action="" method="POST" id="formsiswa">
+                        
                                 <div class="form-group mt-3">
                                     <label >NIS Siswa</label>
                                     <input type="number" name="nis_siswa" class="form-control" id="nis" placeholder="NIS">
@@ -67,10 +68,10 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                         
                         <!-- INI Kanan -->
-                        <div class="row">
+                        
                             <div class="col-lg-6">
                                 <div class="form-group mt-3">
                                     <label >NISN</label>
@@ -113,8 +114,6 @@
                                 <button type="button" name="btnsave" id="btnsave" class="btn btn-primary mt-3 float-left">Save</button>
                                 <button id="cancel-add" type="button" class="btn btn-primary mt-3 float-left">Cancel</button>
                             </div>
-                        </div>
-                    </form>
                     </div>
                 </div>
             </div>
