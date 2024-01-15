@@ -64,12 +64,12 @@
 
                 <div class="row">
                 <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                <div class="col-lg-9 col-md-8">Rivansyah</div>
                 </div>
 
                 <div class="row">
                 <div class="col-lg-3 col-md-4 label">Company</div>
-                <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                <div class="col-lg-9 col-md-8">Lorem Ipsum</div>
                 </div>
 
                 <div class="row">
@@ -79,22 +79,22 @@
 
                 <div class="row">
                 <div class="col-lg-3 col-md-4 label">Country</div>
-                <div class="col-lg-9 col-md-8">USA</div>
+                <div class="col-lg-9 col-md-8">Indonesia</div>
                 </div>
 
                 <div class="row">
                 <div class="col-lg-3 col-md-4 label">Address</div>
-                <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                <div class="col-lg-9 col-md-8">Kota Tangerang</div>
                 </div>
 
                 <div class="row">
                 <div class="col-lg-3 col-md-4 label">Phone</div>
-                <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                <div class="col-lg-9 col-md-8">089654422572</div>
                 </div>
 
                 <div class="row">
                 <div class="col-lg-3 col-md-4 label">Email</div>
-                <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                <div class="col-lg-9 col-md-8">rivansyah307@gmail.com</div>
                 </div>
 
             </div>
@@ -106,7 +106,7 @@
                 <div class="row mb-3">
                     <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                     <div class="col-md-8 col-lg-9">
-                    <img src="assets/img/profile-img.jpg" alt="Profile">
+                    <img src="assets/img/Rivansyah (1).jpg" alt="Profile">
                     <div class="pt-2">
                         <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
                         <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -117,7 +117,7 @@
                 <div class="row mb-3">
                     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                     <div class="col-md-8 col-lg-9">
-                    <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                    <input name="fullName" type="text" class="form-control" id="fullName" value="Rivansyah">
                     </div>
                 </div>
 
@@ -145,28 +145,28 @@
                 <div class="row mb-3">
                     <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
                     <div class="col-md-8 col-lg-9">
-                    <input name="country" type="text" class="form-control" id="Country" value="USA">
+                    <input name="country" type="text" class="form-control" id="Country" value="Indonesia">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                     <div class="col-md-8 col-lg-9">
-                    <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
+                    <input name="address" type="text" class="form-control" id="Address" value="Kota Tangerang">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                     <div class="col-md-8 col-lg-9">
-                    <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                    <input name="phone" type="text" class="form-control" id="Phone" value="089654422572">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                     <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                    <input name="email" type="email" class="form-control" id="Email" value="rivansyah307@gmail.com">
                     </div>
                 </div>
 
