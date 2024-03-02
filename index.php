@@ -48,6 +48,9 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
   <link href="assets/sweetalert/sweetalert2.min.css" rel="stylesheet">
   <link href="assets/fontawesome/css/all.css" rel="stylesheet">
 
+  <!-- DATA TABLE -->
+  <link rel="stylesheet" href="assets/datatable-pack/datables/dataTables.min.css">
+
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
@@ -316,6 +319,9 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/sweetalert/sweetalert2.all.min.js"></script>
   <script src="assets/fontawesome/css/all.js"></script>
+
+  <!-- Data Table -->
+  <script src="assets/datatable-pack/datables/dataTables.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
