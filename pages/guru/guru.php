@@ -44,6 +44,7 @@
                         <th class="text-center">NAMA GURU</th>
                         <th class="text-center">NUPTK</th>
                         <th class="text-center">MATA PELAJARAN</th>
+                        <th class="text-center">JABATAN</th>
                         <th class="text-center">ACTION</th>
                     </tr>
                   </thead>
@@ -56,6 +57,7 @@
                         <td><?= $guru ["nama_guru"] ?></td>
                         <td><?= $guru ["nuptk"] ?></td>
                         <td><?= $guru ["mapel_guru"] ?></td>
+                        <td><?= $guru ["jabatan"] ?></td>
                         <td>
                           <button id="hapus" data-idguru="<?= $guru ['id_guru'] ?>" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
                           <a href="#" onclick="HtmlLoad('pages/guru/edit-guru.php?idguru=<?= $guru ['id_guru'] ?>')" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
