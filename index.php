@@ -121,24 +121,24 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-          <i class="bi bi-home"></i>
+          <i class="bi bi-house-door-fill"></i>
           <span>HOME</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#kelembagaan-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>KELEMBAGAAN</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-bank"></i><span>KELEMBAGAAN</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="kelembagaan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')">
-              <i class="bi bi-circle"></i><span>PROFIL LEMBAGA</span>
+              <i class="bi bi-person-fill"></i><span>PROFIL LEMBAGA</span>
             </a>
           </li>
           <li>
             <a href="#" onclick="HtmlLoad('pages/kelembagaan/alamat-lembaga.php')">
-              <i class="bi bi-circle"></i><span>ALAMAT LEMBAGA</span>
+              <i class="bi bi-geo-alt-fill"></i><span>ALAMAT LEMBAGA</span>
             </a>
           </li>
           <li>
@@ -148,7 +148,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
           </li>
           <li>
             <a href="components-kartu-ujian.html">
-              <i class="bi bi-circle"></i><span>DATA YAYASAN</span>
+              <i class="bi bi-bar-chart-fill"></i><span>DATA YAYASAN</span>
             </a>
           </li>
         </ul>
@@ -156,17 +156,17 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>AKADEMIK</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-book-fill"></i><span>AKADEMIK</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="#" onclick="HtmlLoad('pages/pelajaran/pelajaran.php')">
-              <i class="bi bi-circle"></i><span>JADWAL PELAJARAN</span>
+              <i class="bi bi-calendar-minus-fill"></i><span>JADWAL PELAJARAN</span>
             </a>
           </li>
           <li>
             <a href="components-kartu-ujian.html">
-              <i class="bi bi-circle"></i><span>KARTU UJIAN</span>
+              <i class="bi bi-person-vcard"></i><span>KARTU UJIAN</span>
             </a>
           </li>
           <li>
@@ -176,7 +176,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
           </li>
           <li>
             <a href="#" onclick="HtmlLoad('pages/siswa/siswa.php')" >
-              <i class="bi bi-circle"></i><span>DATA SISWA</span>
+              <i class="bi bi-person-lines-fill"></i><span>DATA SISWA</span>
             </a>
           </li>
           <li>
@@ -189,12 +189,12 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#administrasi-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>ADMINISTRASI</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-bank2"></i><span>ADMINISTRASI</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="administrasi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="#" onclick="HtmlLoad('pages/administrasi/persuratan.php')">
-              <i class="bi bi-circle"></i><span>PERSURATAN</span>
+              <i class="bi bi-envelope-fill"></i><span>PERSURATAN</span>
             </a>
           </li>
           <li>
