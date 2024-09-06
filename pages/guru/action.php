@@ -15,8 +15,9 @@ if(isset($action)){
             $namaguru = $_POST["namaguru"];
             $nuptk = $_POST["nuptk"];
             $mapel = $_POST["mapel"];
+            $jabatan = $_POST["jabatan"];
 
-            $query = "INSERT INTO tb_guru VALUES ($idguru, '$namaguru', '$nuptk', '$mapel')";
+            $query = "INSERT INTO tb_guru VALUES ($idguru, '$namaguru', '$nuptk', '$mapel', '$jabatan')";
 
             if(mysqli_query($connect, $query)){
                 echo json_encode(["status" => "success", "info" => "berhasil tambah data"]);
@@ -31,8 +32,9 @@ if(isset($action)){
             $namaguru = $_POST["namaguru"];
             $nuptk = $_POST["nuptk"];
             $mapel = $_POST["mapel"];
+            $jabatan = $_POST["jabatan"];
 
-            $query = "UPDATE tb_guru SET nama_guru = '$namaguru', nuptk = '$nuptk', mapel_guru = '$mapel' WHERE id_guru = $idguru";
+            $query = "UPDATE tb_guru SET nama_guru = '$namaguru', nuptk = '$nuptk', mapel_guru = '$mapel', jabatan = '$jabatan' WHERE id_guru = $idguru";
 
             if(mysqli_query($connect, $query)){
                 echo json_encode(["status" => "success", "info" => "berhasil tambah data"]);

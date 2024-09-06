@@ -26,6 +26,11 @@
                                     <label for="text">Mata pelajaran</label>
                                     <input type="mapel" name="mapel" class="form-control" id="mapel" placeholder="Mata Pelajaran">
                                 </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="text">jabatan</label>
+                                    <input type="jabatan" name="jabatan" class="form-control" id="jabatan" placeholder="Jabatan">
+                                </div>
                                 
                                                 
                                 <button type="button" name="btnsave" id="btnsave" class="btn btn-primary mt-3 float-left">Save</button>

@@ -43,6 +43,11 @@ foreach($guru as $g){
                                     <label for="text">Mata pelajaran</label>
                                     <input type="mapel" name="mapel" class="form-control" id="mapel" value="<?= $data["mapel_guru"] ?>">
                                 </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="text">Jabatan</label>
+                                    <input type="jabatan" name="jabatan" class="form-control" id="jabatan" value="<?= $data["jabatan"] ?>">
+                                </div>
                                 
                                                 
                                 <button type="button" name="btnsave" id="btnsave" class="btn btn-primary mt-3 float-left">Save</button>
