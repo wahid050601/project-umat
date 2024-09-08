@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  apache:
+    # build: .
+    image: php:apache
+    container_name: sia-yaj
+    volumes:
+      # - ./:/usr/local/apache2/htdocs/myapps
+      - ./:/var/www/html/sia-yaj
+    environment:
+      DB_HOST: 172.20.208.1
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: wahid561
+      DB_DATABASE: sia_yaj
+    ports:
+      - "123:80"
+      # - "4343:443"
