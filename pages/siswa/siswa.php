@@ -119,6 +119,8 @@
 
 <script>
 // INI FUNGSI HAPUS DATA SISWA
+$(".table-siswa").DataTable();
+
 $(".table-siswa").on("click", "#hapus", function(){
 
   Swal.fire({

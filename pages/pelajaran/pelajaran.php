@@ -47,6 +47,9 @@
         <!-- BODY TAB JADWAL -->
         <div class="tab-content mt-3" id="myTabContent">
             <div class="tab-pane fade" id="page_jadwal" role="tabpanel">
+                <div class="form-select-kelas mb-3 mt-3" style="width: 40%;">
+                    <select id="select-kelas" class="form-select form-select-sm"></select>
+                </div>
                 <ul class="list-group">
                     <li class="list-group-item">
                         <div class="head-jadwal">Jadwal Hari <span class="day-jadwal"></span></div>
@@ -63,53 +66,7 @@
                     </li>
                 </ul>
             </div>
-            <!-- <div class="tab-pane fade" id="selasa" role="tabpanel" aria-labelledby="selasa-tab">
-                SELASA Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, officiis?
-            </div>
-            <div class="tab-pane fade" id="rabu" role="tabpanel" aria-labelledby="rabu-tab">
-                RABU Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, officiis?
-            </div>
-            <div class="tab-pane fade" id="kamis" role="tabpanel" aria-labelledby="kamis-tab">
-                KAMIS Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, officiis?
-            </div>
-            <div class="tab-pane fade" id="jumat" role="tabpanel" aria-labelledby="jumat-tab">
-                JUMAT Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, officiis?
-            </div>
-            <div class="tab-pane fade" id="sabtu" role="tabpanel" aria-labelledby="sabtu-tab">
-                SABTU Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, officiis?
-            </div> -->
         </div>
-
-        <!-- <ul class="list-group mt-4">
-            <li class="list-group-item text-center">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" data-namahari="Senin" class="btn btn-outline-primary jadwalmapel" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Senin</button>
-                    <button type="button" data-namahari="Selasa" class="btn btn-outline-primary jadwalmapel" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Selasa</button>
-                    <button type="button" data-namahari="Rabu" class="btn btn-outline-primary jadwalmapel" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Rabu</button>
-                    <button type="button" data-namahari="Kamis" class="btn btn-outline-primary jadwalmapel" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Kamis</button>
-                    <button type="button" data-namahari="Jumat" class="btn btn-outline-primary jadwalmapel" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Jumat</button>
-                    <button type="button" data-namahari="Sabtu" class="btn btn-outline-primary jadwalmapel" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Sabtu</button>
-                </div>
-            </li>
-            <div class="collapse" id="collapseExample">
-                <li class="list-group-item">
-                    <div class="head-jadwal">
-                        Jadwal Hari <span class="day-jadwal"></span>
-                    </div>
-                    <hr>
-                    <div class="button-action">
-                        <button class="btn btn-primary btn-sm" id="addJadwalBtn"><i class="bi bi-plus"></i></button>
-                        <button class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></button>
-                    </div>
-                    
-                    <div class="loading"><i class="bi bi-cloud-arrow-down"></i>&nbsp; Loading ...</div>
-                    <div class="table-jadwal">
-
-                    </div>
-                </li>
-            </div>
-            <small style="font-size: 11px; font-style: italic; color: red;">*) Pilih salah satu hari</small>
-        </ul> -->
     </div>
 </div>
 
@@ -182,12 +139,34 @@
         // Changes Header Jadwal
         var namahari = $(this).data('namahari');
         $('.day-jadwal').html(namahari);
+
+        // Get Data Kelas
+        $.ajax({
+            method: "post",
+            url: "pages/pelajaran/pelajaran-get-data.php",
+            dataType: "json",
+            data: {
+                "action" : "getDataMapel",
+                "getkelas" : "true"
+            },
+            success: function(datakelas){
+                // console.log(datakelas);
+                let showkelas = '<option value="">__pilih kelas__</option>';
+                $.each(datakelas.datakelas, function(id,val){
+                    showkelas += '<option value="'+val.id_kelas+'">'+val.kelas+'</option>';
+                });
+                $('#select-kelas').append(showkelas);
+            }
+        });
         
         // Get Data Mapel
         getDataMapel(namahari);
     });
 
     $('#addJadwalBtn').on('click', function(){
+        $('.sel-jam').val('');
+        $('#waktuMulai').val('');
+        $('#waktuSelesai').val('');
         $('.formSelectGuru').empty();
         $('.formSelectGuru').append('<option>__Pilih Guru__</option>');
         $('.formSelectGuru').attr('disabled', true);
