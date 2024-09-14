@@ -136,22 +136,22 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
         <ul id="kelembagaan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')">
-              <i class="bi bi-person-fill"></i><span>PROFIL LEMBAGA</span>
+              <i class="bi bi-person-fill" style="font-size: 12px;"></i><span> PROFIL LEMBAGA</span>
             </a>
           </li>
           <li>
             <a href="#" onclick="HtmlLoad('pages/kelembagaan/alamat-lembaga.php')">
-              <i class="bi bi-geo-alt-fill"></i><span>ALAMAT LEMBAGA</span>
+              <i class="bi bi-geo-alt-fill" style="font-size: 12px;"></i><span>ALAMAT LEMBAGA</span>
             </a>
           </li>
           <li>
             <a href="components-kartu-ujian.html">
-              <i class="bi bi-circle"></i><span>PIMPINAN LEMBAGA</span>
+              <i class="bi bi-circle" style="font-size: 12px;"></i><span>PIMPINAN LEMBAGA</span>
             </a>
           </li>
           <li>
             <a href="components-kartu-ujian.html">
-              <i class="bi bi-bar-chart-fill"></i><span>DATA YAYASAN</span>
+              <i class="bi bi-bar-chart-fill" style="font-size: 12px;"></i><span>DATA YAYASAN</span>
             </a>
           </li>
         </ul>
