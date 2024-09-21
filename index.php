@@ -129,32 +129,11 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#kelembagaan-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bank"></i><span>KELEMBAGAAN</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="kelembagaan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')">
-              <i class="bi bi-person-fill"></i><span>PROFIL LEMBAGA</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="HtmlLoad('pages/kelembagaan/alamat-lembaga.php')">
-              <i class="bi bi-geo-alt-fill"></i><span>ALAMAT LEMBAGA</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-kartu-ujian.html">
-              <i class="bi bi-circle"></i><span>PIMPINAN LEMBAGA</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-kartu-ujian.html">
-              <i class="bi bi-bar-chart-fill"></i><span>DATA YAYASAN</span>
-            </a>
-          </li>
-        </ul>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')">
+            <i class="bi bi-person-fill"></i><span>PROFIL LEMBAGA</span>
+          </a>
+        </li>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
@@ -173,11 +152,6 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
             </a>
           </li>
           <li>
-            <a href="components-legger-nilai.html">
-              <i class="bi bi-circle"></i><span>LEGGER NILAI</span>
-            </a>
-          </li>
-          <li>
             <a href="#" onclick="HtmlLoad('pages/siswa/siswa.php')" >
               <i class="bi bi-person-lines-fill"></i><span>DATA SISWA</span>
             </a>
@@ -188,24 +162,14 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
             </a>
           </li>
         </ul>
+
       </li><!-- End Components Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#administrasi-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bank2"></i><span>ADMINISTRASI</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="administrasi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#" onclick="HtmlLoad('pages/administrasi/persuratan.php')">
-              <i class="bi bi-envelope-fill"></i><span>PERSURATAN</span>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/administrasi/pengumuman.php')">
+              <i class="bi bi-person-fill"></i><span>PENGUMUMAN</span>
             </a>
-          </li>
-          <li>
-          <a href="#" onclick="HtmlLoad('pages/administrasi/pengumuman.php')">
-              <i class="bi bi-circle"></i><span>PENGUMUMAN</span>
-            </a>
-          </li>
-        </ul>
+        </li>
       </li><!-- End Components Nav -->
 
       <!-- <li class="nav-heading">#</li> -->
@@ -248,24 +212,15 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
           <div class="col-xl-4">
             <div class="card">
               <div class="card-body mt-4">
-                <h3>15</h3>
-                <h5>Guru</h5>
-                <h5>2023/2024</h5>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4">
-            <div class="card">
-              <div class="card-body mt-4">
-                <h3>15</h3>
-                <h5>Guru</h5>
+                <h3>100</h3>
+                <h5>Siswa</h5>
                 <h5>2023/2024</h5>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section class="section">
+      <!-- <section class="section">
         <div class="row">
           <div class="col-xl-15">
             <div class="card">
@@ -276,7 +231,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
 
     <!-- END MAIN PAGES -->
     </div>
