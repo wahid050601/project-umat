@@ -8,3 +8,7 @@ create table tb_jadwal_mapel (
 	mapel varchar(50) not null,
 	guru_mapel varchar(50) not null
 );
+
+
+-- UPDATE QUERY JADWAL 02-03-2024
+alter table sia_yaj.tb_jadwal_mapel add column kelas varchar(15) after hari;

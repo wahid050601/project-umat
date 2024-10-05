@@ -129,11 +129,40 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
         </a>
       </li><!-- End Dashboard Nav -->
 
+<<<<<<< HEAD
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')">
             <i class="bi bi-person-fill"></i><span>PROFIL LEMBAGA</span>
           </a>
         </li>
+=======
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#kelembagaan-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bank"></i><span>KELEMBAGAAN</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="kelembagaan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')">
+              <i class="bi bi-person-fill" style="font-size: 12px;"></i><span> PROFIL LEMBAGA</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="HtmlLoad('pages/kelembagaan/alamat-lembaga.php')">
+              <i class="bi bi-geo-alt-fill" style="font-size: 12px;"></i><span>ALAMAT LEMBAGA</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-kartu-ujian.html">
+              <i class="bi bi-circle" style="font-size: 12px;"></i><span>PIMPINAN LEMBAGA</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-kartu-ujian.html">
+              <i class="bi bi-bar-chart-fill" style="font-size: 12px;"></i><span>DATA YAYASAN</span>
+            </a>
+          </li>
+        </ul>
+>>>>>>> 6aac3a51a83b228077c1ce2ddd51872d8a53d749
       </li><!-- End Components Nav -->
 
       <li class="nav-item">

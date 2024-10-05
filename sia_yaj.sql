@@ -1,56 +1,65 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 8.2.0, for Linux (x86_64)
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 18, 2023 at 02:37 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.8
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: sia_yaj
+-- ------------------------------------------------------
+-- Server version	8.2.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `sia_yaj`
---
-
--- --------------------------------------------------------
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `tb_guru`
 --
 
+DROP TABLE IF EXISTS `tb_guru`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_guru` (
-  `id_guru` int(11) NOT NULL,
+  `id_guru` int NOT NULL AUTO_INCREMENT,
   `nama_guru` varchar(50) NOT NULL,
   `nuptk` varchar(50) NOT NULL,
-  `mapel_guru` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `mapel_guru` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_guru`)
+) ENGINE=InnoDB AUTO_INCREMENT=23102134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_guru`
+-- Table structure for table `tb_jadwal_mapel`
 --
 
-INSERT INTO `tb_guru` (`id_guru`, `nama_guru`, `nuptk`, `mapel_guru`) VALUES
-(101011, 'Muzahidin, S.Pd', '01234567891021', 'Pendidikan Jasmani'),
-(23102120, 'Zaini', '3142755657200023', 'Pendidikan Jasmani PJOK'),
-(23102122, 'Harisuddin', '832742940181', 'Akidah akhlak');
-
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `tb_jadwal_mapel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tb_jadwal_mapel` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `hari` varchar(20) NOT NULL,
+  `kelas` varchar(15) DEFAULT NULL,
+  `jam_ke` int NOT NULL,
+  `waktu_mulai` varchar(20) NOT NULL,
+  `waktu_selesai` varchar(20) NOT NULL,
+  `mapel` varchar(50) NOT NULL,
+  `guru_mapel` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tb_profil_lembaga`
 --
 
+DROP TABLE IF EXISTS `tb_profil_lembaga`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_profil_lembaga` (
-  `id_lembaga` int(20) NOT NULL,
+  `id_lembaga` int NOT NULL AUTO_INCREMENT,
   `nama_sekolah` varchar(50) NOT NULL,
   `jenjang_sekolah` varchar(50) NOT NULL,
   `nsm` varchar(30) NOT NULL,
@@ -65,18 +74,21 @@ CREATE TABLE `tb_profil_lembaga` (
   `tgl_akreditasi` date NOT NULL,
   `berlaku_akreditasi` date NOT NULL,
   `no_akreditasi` varchar(20) NOT NULL,
-  `npwp` int(11) NOT NULL,
-  `tahun_berdiri` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+  `npwp` int NOT NULL,
+  `tahun_berdiri` int NOT NULL,
+  PRIMARY KEY (`id_lembaga`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tb_siswa`
 --
 
+DROP TABLE IF EXISTS `tb_siswa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_siswa` (
-  `id_siswa` int(11) NOT NULL,
+  `id_siswa` int NOT NULL AUTO_INCREMENT,
   `nis_siswa` varchar(8) NOT NULL,
   `nisn_siswa` varchar(12) NOT NULL,
   `nik_siswa` varchar(20) NOT NULL,
@@ -88,99 +100,38 @@ CREATE TABLE `tb_siswa` (
   `ibu_siswa` varchar(50) NOT NULL,
   `kelas_siswa` varchar(10) NOT NULL,
   `rombel_siswa` varchar(10) NOT NULL,
-  `telp_siswa` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tb_siswa`
---
-
-INSERT INTO `tb_siswa` (`id_siswa`, `nis_siswa`, `nisn_siswa`, `nik_siswa`, `nama_siswa`, `jk_siswa`, `tplahir_siswa`, `tgl_lahir`, `ayah_siswa`, `ibu_siswa`, `kelas_siswa`, `rombel_siswa`, `telp_siswa`) VALUES
-(2, '2115115', '3010204010', '3671512318241', 'Muhammad Wahid', 'laki-laki', 'Jakarta', '2023-03-08', 'Munir', 'Rohaya', '8', 'VIII B', '08822101292'),
-(5, '129301', '001231231', '12093791027401', 'Wahyudi', 'laki-laki', 'Tangerang', '0000-00-00', 'Romlih', 'Mulyanah', '8', 'VIII B', '021203192381'),
-(7, '123123', '21312313', '29037123719073', 'Wahid', 'laki-laki', 'Gunung Kidul', '2023-09-05', 'Marno', 'marni', '7', 'VII B', '123810293');
-
--- --------------------------------------------------------
+  `telp_siswa` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_siswa`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tb_user`
 --
 
+DROP TABLE IF EXISTS `tb_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_user` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
   `alamat` varchar(100) NOT NULL,
   `no_telp` varchar(30) NOT NULL,
-  `level` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `level` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Dumping data for table `tb_user`
---
-
-INSERT INTO `tb_user` (`id`, `username`, `password`, `nama`, `email`, `alamat`, `no_telp`, `level`) VALUES
-(1, 'admin', 'admin', 'rivansyah', 'rivansyah@gmail.com', 'kp.cantiga kota tangerang', '081233445567', 'admin');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tb_guru`
---
-ALTER TABLE `tb_guru`
-  ADD PRIMARY KEY (`id_guru`);
-
---
--- Indexes for table `tb_profil_lembaga`
---
-ALTER TABLE `tb_profil_lembaga`
-  ADD PRIMARY KEY (`id_lembaga`);
-
---
--- Indexes for table `tb_siswa`
---
-ALTER TABLE `tb_siswa`
-  ADD PRIMARY KEY (`id_siswa`);
-
---
--- Indexes for table `tb_user`
---
-ALTER TABLE `tb_user`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tb_guru`
---
-ALTER TABLE `tb_guru`
-  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23102134;
-
---
--- AUTO_INCREMENT for table `tb_profil_lembaga`
---
-ALTER TABLE `tb_profil_lembaga`
-  MODIFY `id_lembaga` int(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tb_siswa`
---
-ALTER TABLE `tb_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `tb_user`
---
-ALTER TABLE `tb_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-03-23  3:40:44
