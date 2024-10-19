@@ -1,8 +1,8 @@
 <?php
 
-$host = "host.docker.internal" ;
+$host = "localhost" ;
 $user = "root" ;
-$pass = "wahid561" ;
+$pass = "" ;
 $database = "sia_yaj" ;
 // $host = "localhost" ;
 // $user = "root" ;

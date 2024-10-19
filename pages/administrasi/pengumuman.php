@@ -1,3 +1,3 @@
 <div class="pagetitle">
-    <h1>Pengumuman</h1>
+    <h1>Ekstrakurikuler</h1>
 </div>
