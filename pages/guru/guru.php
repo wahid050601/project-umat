@@ -11,69 +11,65 @@
     // Instansiasi Koneksi dan Query
     $data_guru = mysqli_query ($conn, $query);
 
-
-
-
-
 ?>
 
 
-<div class="pagetitle">
-  <h1>DATA GURU</h1>
-</div>
-<section class="section">
-  <div class="row">
-    <div class="col-xl-12">
-      <div class="card">
-        <div class="card-body mt-4">
-          <a href="#" onclick="HtmlLoad('pages/guru/add_guru.php')" class="btn btn-primary mb-3">Tambah Guru</a>
+<style>
+  .table-guru {
+    font-size: smaller;
+    width: 100%;
+    white-space: nowrap;
+  }
+</style>
 
-          <style>
-              table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-              }
-              </style>
-              <!-- TABLE GURU -->
-              <table class="table table-bordered table-guru">
-                  <thead class="bg-primary text-white">
-                    <tr> 
-                        <th class="text-center">No.</th>
-                        <th class="text-center">ID GURU</th>
-                        <th class="text-center">NAMA GURU</th>
-                        <th class="text-center">NUPTK</th>
-                        <th class="text-center">MATA PELAJARAN</th>
-                        <th class="text-center">JABATAN</th>
-                        <th class="text-center">ACTION</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $nomor = 1; ?>
-                    <?php foreach ($data_guru as $guru) : ?>
-                      <tr>
-                        <th><?= $nomor; ?></th>
-                        <td><?= $guru ["id_guru"] ?></td>
-                        <td><?= $guru ["nama_guru"] ?></td>
-                        <td><?= $guru ["nuptk"] ?></td>
-                        <td><?= $guru ["mapel_guru"] ?></td>
-                        <td><?= $guru ["jabatan"] ?></td>
-                        <td>
-                          <button id="hapus" data-idguru="<?= $guru ['id_guru'] ?>" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
-                          <a href="#" onclick="HtmlLoad('pages/guru/edit-guru.php?idguru=<?= $guru ['id_guru'] ?>')" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                        </td>
-                      </tr>
-                    <?php $nomor++; ?>
-                    <?php endforeach; ?>
-                  </tbody>
-              </table>
-        </div>
-      </div>
+<div class="card">
+  <div class="card-header">
+      <i class="bi bi-person-video3"></i>&nbsp; Data Guru
+  </div>
+  <div class="card-body mt-4">
+    <div class="button-guru">
+      <a href="#" onclick="HtmlLoad('pages/guru/add_guru.php')" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> add</a>
+      <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> edit</a>
+      <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-trash"></i> delete</a>
+    </div>
+    <hr>
+
+    <div class="content-guru">
+      <table class="table table-bordered table-sm table-hover table-guru">
+        <thead class="bg-secondary text-white">
+          <tr> 
+              <th class="text-center">No.</th>
+              <th class="text-center">ID Guru</th>
+              <th class="text-center">Nama Guru</th>
+              <th class="text-center">NUPTK</th>
+              <th class="text-center">Mata Pelajaran</th>
+              <th class="text-center">Jabatan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php $nomor = 1; ?>
+          <?php foreach ($data_guru as $guru) : ?>
+            <tr>
+              <th><?= $nomor; ?></th>
+              <td><?= $guru ["id_guru"] ?></td>
+              <td><?= $guru ["nama_guru"] ?></td>
+              <td><?= $guru ["nuptk"] ?></td>
+              <td><?= $guru ["mapel_guru"] ?></td>
+              <td><?= $guru ["jabatan"] ?></td>
+            </tr>
+          <?php $nomor++; ?>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
     </div>
   </div>
-</section>
+</div>
+
+
 
 <script>
+
+  $(".table-guru").DataTable();
 
 // INI FUNGSI HAPUS DATA GURU
 $(".table-guru").on("click", "#hapus", function(){

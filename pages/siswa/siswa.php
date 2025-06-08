@@ -10,85 +10,78 @@
 
     // Instansiasi Koneksi dan Query
     $data_siswa = mysqli_query ($conn, $query);
-
-
-
-
-
-
 ?>
 
 
-<div class="pagetitle">
-  <h1>DATA SISWA</h1>
-</div>
-<section class="section">
-  <div class="row">
-    <div class="col-xl-12">
-      <div class="card">
-        <div class="card-body mt-4">
-          <a href="#" onclick="HtmlLoad('pages/siswa/add.php')" class="btn btn-primary btn-sm mb-3"><i class="bi bi-plus"></i> Tambah Siswa</a>
-          <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-cloud-arrow-up-fill"></i>
-            Upload
-          </button>
-          <a href="template/template-siswa.xlsx" class="btn btn-success btn-sm mb-3"><i class="bi bi-download"></i> Download</a>
+<style>
+  .table-siswa{
+    font-size: smaller;
+    width: 100%;
+    white-space: nowrap;
+  }
+</style>
 
-          <style>
-              table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-              }
-              </style>
-              <table class="table table-bordered table-siswa">
-                  <thead class="bg-primary text-white">
-                    <tr> 
-                        <th class="text-center">No.</th>
-                        <th class="text-center">NIS</th>
-                        <th class="text-center">NISN</th>
-                        <th class="text-center">NIK</th>
-                        <th class="text-center">Nama Siswa</th>
-                        <th class="text-center">Jenis Kelamin</th>
-                        <th class="text-center">Tempat Lahir</th>
-                        <th class="text-center">Tanggal Lahir</th>
-                        <th class="text-center">Nama Ayah</th>
-                        <th class="text-center">Nama Ibu</th>
-                        <th class="text-center">Kelas</th>
-                        <th class="text-center">Rombel</th>
-                        <th class="text-center">No. Telpon</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $nomor = 1; ?>
-                    <?php foreach ($data_siswa as $siswa) : ?>
-                      <tr>
-                        <th><?= $nomor; ?></th>
-                        <td><?= $siswa ["nis_siswa"] ?></td>
-                        <td><?= $siswa ["nisn_siswa"] ?></td>
-                        <td><?= $siswa ["nik_siswa"] ?></td>
-                        <td><?= $siswa ["nama_siswa"] ?></td>
-                        <td><?= $siswa ["jk_siswa"] ?></td>
-                        <td><?= $siswa ["tplahir_siswa"] ?></td>
-                        <td><?= $siswa ["tgl_lahir"] ?></td>
-                        <td><?= $siswa ["ayah_siswa"] ?></td>
-                        <td><?= $siswa ["ibu_siswa"] ?></td>
-                        <td><?= $siswa ["kelas_siswa"] ?></td>
-                        <td><?= $siswa ["rombel_siswa"] ?></td>
-                        <td><?= $siswa ["telp_siswa"] ?></td>
-                        <td>
-                          <button id="hapus" data-idsiswa="<?= $siswa ['id_siswa'] ?>" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
-                          <a href="#" onclick="HtmlLoad('pages/siswa/edit-siswa.php?idsiswa=<?= $siswa ['id_siswa'] ?>')" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                        </td>
-                      </tr>
-                    <?php $nomor++; ?>
-                    <?php endforeach; ?>
-                  </tbody>
-              </table>
-        </div>
-      </div>
-    </div>
+<div class="card">
+  <div class="card-header">
+      <i class="bi bi-people-fill"></i>&nbsp; Data Siswa
   </div>
+  <div class="card-body mt-4">
+    <div class="button-siswa">
+      <a href="#" onclick="HtmlLoad('pages/siswa/add.php')" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> add</a>
+      <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> edit</a>
+      <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-trash"></i> delete</a>
+      <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-cloud-arrow-up-fill"></i> upload</button>
+      <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> download</a>
+    </div>
+    <hr>
+
+    <div class="content-siswa">
+      <table class="table table-bordered table-hover table-sm table-siswa">
+        <thead class="bg-secondary text-white">
+          <tr> 
+              <th class="text-center">No.</th>
+              <th class="text-center">NIS</th>
+              <th class="text-center">NISN</th>
+              <th class="text-center">NIK</th>
+              <th class="text-center">Nama Siswa</th>
+              <th class="text-center">Jenis Kelamin</th>
+              <th class="text-center">Tempat Lahir</th>
+              <th class="text-center">Tanggal Lahir</th>
+              <th class="text-center">Nama Ayah</th>
+              <th class="text-center">Nama Ibu</th>
+              <th class="text-center">Kelas</th>
+              <th class="text-center">Rombel</th>
+              <th class="text-center">No. Telpon</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php $nomor = 1; ?>
+          <?php foreach ($data_siswa as $siswa) : ?>
+            <tr>
+              <th><?= $nomor; ?></th>
+              <td><?= $siswa ["nis_siswa"] ?></td>
+              <td><?= $siswa ["nisn_siswa"] ?></td>
+              <td><?= $siswa ["nik_siswa"] ?></td>
+              <td><?= $siswa ["nama_siswa"] ?></td>
+              <td><?= $siswa ["jk_siswa"] ?></td>
+              <td><?= $siswa ["tplahir_siswa"] ?></td>
+              <td><?= $siswa ["tgl_lahir"] ?></td>
+              <td><?= $siswa ["ayah_siswa"] ?></td>
+              <td><?= $siswa ["ibu_siswa"] ?></td>
+              <td><?= $siswa ["kelas_siswa"] ?></td>
+              <td><?= $siswa ["rombel_siswa"] ?></td>
+              <td><?= $siswa ["telp_siswa"] ?></td>
+            </tr>
+          <?php $nomor++; ?>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
 
 
   <!-- Modal -->
@@ -117,9 +110,12 @@
 </div>
 </section>
 
+
 <script>
-// INI FUNGSI HAPUS DATA SISWA
-$(".table-siswa").DataTable();
+
+$(".table-siswa").DataTable({
+  scrollX: true,
+});
 
 $(".table-siswa").on("click", "#hapus", function(){
 

@@ -175,8 +175,8 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
             </a>
           </li>
           <li>
-            <a href="components-kartu-ujian.html">
-              <i class="bi bi-person-vcard"></i><span>KARTU UJIAN</span>
+            <a href="#" onclick="HtmlLoad('pages/rombel/rombel.php')">
+              <i class="bi bi-person-vcard"></i><span>ROMBONGAN BELAJAR</span>
             </a>
           </li>
           <li>
