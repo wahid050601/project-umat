@@ -2,6 +2,8 @@
 
 require "../../function/database.php";
 
+// Buat koneksi database
+$conn = mysqli_connect($host, $user, $pass, $database);
 
 $action = $_POST["action"];
 
@@ -25,11 +27,11 @@ if(isset($action)){
             $ibusiswa = $_POST["ibu_siswa"];
             $rombelsiswa = $_POST["rombel_siswa"];
 
-            $query = "INSERT INTO tb_siswa VALUES ('', '$nissiswa', '$nisnsiswa', 
+            $query = "INSERT INTO tb_siswa VALUES (null, '$nissiswa', '$nisnsiswa', 
             '$niksiswa', '$namasiswa', '$jksiswa', '$tplahir_siswa', '$tgllahir_siswa', '$ayahsiswa', 
             '$ibusiswa', '$kelassiswa', '$rombelsiswa', '$telpsiswa')";
 
-            if(mysqli_query($connect, $query)){
+            if(mysqli_query($conn, $query)){
                 echo json_encode(["status" => "sukses", "info" => "berhasil tambah data"]);
             }else{
                 echo json_encode(["status" => "gagal", "info" => "gagal tambah data"]);
@@ -51,7 +53,7 @@ if(isset($action)){
             $tgllahir_siswa = $_POST["tgl_lahir"];
             $ibusiswa = $_POST["ibu_siswa"];
             $rombelsiswa = $_POST["rombel_siswa"];
-
+    
             $query = "UPDATE tb_siswa SET nis_siswa = '$nissiswa', 
             nisn_siswa = '$nisnsiswa', 
             nik_siswa = '$niksiswa', 
@@ -66,17 +68,42 @@ if(isset($action)){
             telp_siswa = '$telpsiswa'  
             WHERE id_siswa = $idsiswa";
 
-            if(mysqli_query($connect, $query)){
+            error_log($query);
+    
+            if(mysqli_query($conn, $query)){
                 echo json_encode(["status" => "sukses", "info" => "berhasil ubah data"]);
             }else{
                 echo json_encode(["status" => "gagal", "info" => "gagal ubah data"]);
             }
         break;
+        
+        case "getsiswa" :
+            $nis_siswa = $_POST["nis_siswa"];
+            
+            $query = "SELECT * FROM tb_siswa WHERE nis_siswa = '$nis_siswa' LIMIT 1";
+            $result = mysqli_query($conn, $query);
+            
+            if($result && mysqli_num_rows($result) > 0){
+                $siswa = mysqli_fetch_assoc($result);
+                echo json_encode(["status" => "sukses", "data" => $siswa]);
+            } else {
+                echo json_encode(["status" => "gagal", "info" => "Data siswa tidak ditemukan"]);
+            }
+        break;
 
+        case "deletesiswa" :
+            $idsiswa = $_POST["id_siswa"];
+            
+            $query = "DELETE FROM tb_siswa WHERE id_siswa = $idsiswa";
+            error_log("============= $query");
+            
+            if(mysqli_query($conn, $query)){
+                echo json_encode(["status" => "sukses", "info" => "berhasil hapus data"]);
+            } else{
+                echo json_encode(["status" => "gagal", "info" => "gagal hapus data"]);
+            }
+        break;
     }
 }
-
-
-
 
 ?>

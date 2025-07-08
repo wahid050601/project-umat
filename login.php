@@ -46,6 +46,8 @@
 
         }
 
+    }else{
+      echo "<script>alert('Username atau Password yang anda input salah!');</script>";
     }
     $error_login = true;
 
@@ -97,6 +99,9 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <!-- SweetAlert2 -->
+  <link href="assets/sweetalert/sweetalert2.min.css" rel="stylesheet">
+  <script src="assets/sweetalert/sweetalert2.all.min.js"></script>
 </head>
 
 <body style="background-image: url('assets/img/yaj.jpg'); background-size: 1480px 920px; background-repeat:no-repeat">

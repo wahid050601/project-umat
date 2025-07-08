@@ -10,16 +10,16 @@
                         <div class="row"> 
                             <div class="col-lg-6">
                             <!-- INI Kiri -->
-                            <form action="">
+                                <input type="hidden" id="id-form">
                                 <div class="form-group mt-3">
                                     <label for="text">Nama Sekolah</label>
-                                    <input type="text" class="form-control" id="nama-madrasah" placeholder="Nama Sekolah">
+                                    <input type="text" class="form-control" id="nama-sekolah">
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label for="nisn">Jenjang Sekolah</label>
-                                    <select class="custom-select form-control">
-                                        <option selected>Pilih</option>
+                                    <select class="custom-select form-control" id="jenjang-sekolah">
+                                        <option selected>_pilih_</option>
                                         <option value="MI">Madrasah Ibtidaiyah (MI)</option>
                                         <option value="MTs">Madrasah Tsanawiyah (MTs)</option>
                                         <option value="SMP">Sekolah Menengah Pertama (SMP)</option>
@@ -27,79 +27,62 @@
                                 </div>
 
                                 <div class="form-group mt-3">
-                                    <label for="number">Nomor SIOP</label>
-                                    <input type="number" class="form-control" id="nomor-siop" placeholder="Nomor SIOP">
+                                    <label for="number">NSM</label>
+                                    <input type="text" class="form-control" id="nsm">
                                 </div>
 
                                 <div class="form-group mt-3">
-                                    <label for="siop">Masa Berlaku SIOP</label>
-                                    <select class="custom-select form-control">
-                                        <option selected>Masa Berlaku SIOP Sekolah</option>
-                                        <option value="tidak">Tanpa Masa Berlaku</option>
-                                        <option value="ada">Ada Masa Berlaku</option>
-                                    </select>
+                                    <label for="number">NPSN</label>
+                                    <input type="text" class="form-control" id="npsn">
                                 </div>
 
                                 <div class="form-group mt-3">
-                                    <label for="nis">Status Akreditasi</label>
-                                    <select class="custom-select form-control">
-                                        <option selected>Status Akreditasi</option>
-                                        <option value="1">A</option>
-                                        <option value="2">B</option>
-                                        <option value="2">C</option>
-                                        <option value="2">Belum Akreditasi</option>
-                                    </select>
+                                    <label for="number">Status Sekolah</label>
+                                    <input type="text" class="form-control" id="status-sekolah" readonly>
                                 </div>
 
                                 <div class="form-group mt-3">
-                                    <label for="akreditasi">Tanggal Akreditasi</label>
-                                    <input type="date" class="form-control" id="akreditasi" placeholder="#">
+                                    <label for="number">NPWP</label>
+                                    <input type="text" class="form-control" id="npwp" readonly>
                                 </div>
                             </div>
                             
                             <div class="col-lg-6">
                             <!-- INI Kanan -->
-                                <div class="form-group mt-3">
-                                    <label for="number">NPSN</label>
-                                    <input type="number" class="form-control" id="nisn" placeholder="NPSN">
-                                </div>
-                                
-                                <div class="form-group mt-3">
-                                    <label for="number">NIK Siswa</label>
-                                    <input type="number" class="form-control" id="nisn" placeholder="NIK">
-                                </div>
-
-                                <div class="form-group mt-3">
-                                    <label for="nisn">No. Telpon</label>
-                                    <input type="number" class="form-control" id="nisn" placeholder="No. Tlp">
-                                </div>
-
-                                <div class="form-group mt-3">
-                                    <label for="nisn">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" id="nisn" placeholder="#">
-                                </div>
-
-                                <div class="form-group mt-3">
-                                    <label for="nisn">Nama Ibu</label>
-                                    <input type="text" class="form-control" id="nisn" placeholder="Nama Ibu">
-                                </div>
-
-                                <div class="form-group mt-3">
-                                    <label for="rombel">Rombel</label>
-                                    <select class="custom-select form-control">
-                                        <option selected>Pilih</option>
-                                        <option value="1">Kelas 7A</option>
-                                        <option value="2">Kelas 7B</option>
-                                        <option value="2">Kelas 8A</option>
-                                        <option value="2">Kelas 8B</option>
-                                        <option value="2">Kelas 9A</option>
-                                        <option value="2">Kelas 9B</option>
+                            <div class="form-group mt-3">
+                                    <label for="nis">Status Akreditasi</label>
+                                    <select class="custom-select form-control" id="status-akreditasi">
+                                        <option selected>_pilih_</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="belum terakreditasi">Belum Akreditasi</option>
                                     </select>
                                 </div>
-                                
-                                <button type="submit" class="btn btn-primary mt-3 float-right">Save</button>
-                                <button type="button" class="btn btn-primary mt-3 float-right">Cancel</button>
-                            </form>
+
+                                <div class="form-group mt-3">
+                                    <label for="akreditasi">Nilai Akreditasi</label>
+                                    <input type="text" class="form-control" id="nilai-akreditasi">
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="akreditasi">Tanggal Akreditasi</label>
+                                    <input type="date" class="form-control" id="tanggal-akreditasi">
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="akreditasi">Berlaku Akreditasi</label>
+                                    <input type="date" class="form-control" id="berlaku-akreditasi">
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="akreditasi">Tahun Berdiri</label>
+                                    <input type="text" class="form-control" id="tahun-berdiri">
+                                </div>
+
+                                <div class="form-group mt-4">
+                                    <button type="submit" class="btn btn-primary mt-3 float-right" id="btnsave">Update</button>
+                                </div>
                             </div>
                         </div>
                 </div>
@@ -109,23 +92,83 @@
 </section>
 
 <script>
-    $('#btnsave').on('click', function(){
+    // Load detail lembaga
+    loadDetailLembaga();
 
+    $('#btnsave').on('click', function(){
+        let datas = {
+            id: $('#id-form').val(),
+            nama_sekolah: $('#nama-sekolah').val(),
+            jenjang_sekolah: $('#jenjang-sekolah').val(),
+            nsm: $('#nsm').val(),
+            npsn: $('#npsn').val(),
+            status_sekolah: $('#status-sekolah').val(),
+            npwp: $('#npwp').val(),
+            status_akreditasi: $('#status-akreditasi').val(),
+            nilai_akreditasi: $('#nilai-akreditasi').val(),
+            tgl_akreditasi: $('#tanggal-akreditasi').val(),
+            berlaku_akreditasi: $('#berlaku-akreditasi').val(),
+            tahun_berdiri: $('#tahun-berdiri').val(),
+        };
+        
         $.ajax({
             method: "POST",
-            url: "pages/kelembagaan/profil-lembaga.php",
+            url: "pages/kelembagaan/profil-lembaga-act.php",
+            data: JSON.stringify(datas),
             dataType: "json",
-            data: "action=add&" + $('#formguru').serialize(),
             success: function(msg){
                 if(msg.status == "success"){
-                    alert("berhasil tambah data");
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'Data berhasil disimpan',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            loadDetailLembaga();
+                        }
+                    });
                 }else{
-                    alert("gagal tambah data");
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: 'Data gagal disimpan',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             }
         })
         
-    })
+    });
+
+
+    function loadDetailLembaga(){
+        $.ajax({
+            method: "GET",
+            url: "pages/kelembagaan/profil-lembaga-act.php",
+            dataType: "json",
+            success: function(msg){
+                if(msg.status == "success"){
+                    if(msg.count != 0){
+                        $('#id-form').val(msg.data.id_lembaga);
+                        $('#nama-sekolah').val(msg.data.nama_sekolah);
+                        $('#jenjang-sekolah').val(msg.data.jenjang_sekolah);
+                        $('#nsm').val(msg.data.nsm);
+                        $('#npsn').val(msg.data.npsn);
+                        $('#status-sekolah').val(msg.data.status_sekolah);
+                        $('#npwp').val(msg.data.npwp);
+                        $('#status-akreditasi').val(msg.data.status_akreditasi);
+                        $('#nilai-akreditasi').val(msg.data.nilai_akreditasi);
+                        $('#tanggal-akreditasi').val(msg.data.tgl_akreditasi);
+                        $('#berlaku-akreditasi').val(msg.data.berlaku_akreditasi);
+                        $('#tahun-berdiri').val(msg.data.tahun_berdiri);
+                    }
+                }else{
+                    alert("data tidak ditemukan");
+                }
+            }
+        })
+    }
 
 
 </script>
