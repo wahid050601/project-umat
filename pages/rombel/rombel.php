@@ -12,195 +12,583 @@
     </div>
     <div class="card-body mt-4">
         <div class="button-rombel-act">
-            <button type="button" id="add-rombel" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> add</button>
-            <button type="button" id="edit-rombel" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> edit</button>
-            <button type="button" id="del-rombel" class="btn btn-primary btn-sm"><i class="bi bi-trash"></i> delete</button>
+            <button type="button" id="add-rombel" class="btn btn-primary btn-sm" title="Tambah Rombel"><i class="bi bi-plus-circle"></i></button>
+            <button type="button" id="edit-rombel" class="btn btn-primary btn-sm" title="Edit Rombel" disabled><i class="bi bi-pencil-square"></i></button>
+            <button type="button" id="del-rombel" class="btn btn-primary btn-sm" title="Hapus Rombel" disabled><i class="bi bi-trash"></i></button>
+            <button type="button" id="conf-rombel" class="btn btn-primary btn-sm" title="Konfigurasi" disabled><i class="bi bi-house-gear-fill"></i></button>
         </div>
         <hr>
         <div class="bucket-rombel">
-            <div class="card" style="width: 10rem;">
+            <div class="loading-rombel text-center" style="width: 100%;">
+                <img src="assets/img/loading.gif" alt="loading..." width="200px">
+                <h3>Loading ...</h3>
+            </div>
+            <div class="set-rombel"></div>
+
+            <!-- <div class="card" style="width: 15rem;">
+                <div class="card-header"><input type="checkbox" id="cnf-kelas">&nbsp; <label for="cnf-kelas">KELAS IA</label></div>
                 <div class="card-body">
-                    <h5 class="card-title"><input type="radio"> KELAS 1 A</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">TP 2023/2024</h6>
-                    <a href="#" class="card-link btn btn-primary btn-sm"><i class="bi bi-person-fill-add"></i></a>
-                    <a href="#" class="card-link btn btn-primary btn-sm"><i class="bi bi-person-fill-dash"></i></a>
+                    <h5 class="card-title">TP 2024/2025</h5>
+                    <span class="badge bg-primary">Wali Kelas:&nbsp; <i class="bi bi-person-fill"></i> Zaini,S.Pd.</span>
+                    <br>
+                    <span class="badge bg-primary">32 Siswa/i</span>
+                </div>
+            </div> -->
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal Add -->
+<div class="modal" id="addRombelModal" tabindex="-1" aria-labelledby="addRombelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addRombelModalLabel"><i class="bi bi-plus-circle"></i> TAMBAH ROMBONGAN BELAJAR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Jenjang Kelas</label>
+                    <select name="jenjang" id="jenjang" class="form-control form-control-sm form-add-rombel">
+                    </select>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Kelas</label>
+                    <select name="kelas" id="kelas" class="form-control form-control-sm form-add-rombel" disabled>
+                        <option value="">_pilih_</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Wali Kelas</label>
+                    <select name="walikelas" id="walikelas" class="form-control form-control-sm form-add-rombel">
+                    </select>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Maksimal Siswa/i</label>
+                    <input type="number" class="form-control form-control-sm form-add-rombel" id="max">
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Nama Rombel</label>
+                    <input type="text" class="form-control form-control-sm form-add-rombel" id="rombel" readonly>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Tahun Pelajaran</label>
+                    <input type="text" class="form-control form-control-sm form-add-rombel" id="tp" readonly>
                 </div>
             </div>
-            <div class="card" style="width: 10rem;">
-                <div class="card-body">
-                    <h5 class="card-title"><input type="radio"> KELAS 1 B</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">TP 2023/2024</h6>
-                    <a href="#" class="card-link btn btn-primary btn-sm"><i class="bi bi-person-fill-add"></i></a>
-                    <a href="#" class="card-link btn btn-primary btn-sm"><i class="bi bi-person-fill-dash"></i></a>
-                </div>
-            </div>
-            <div class="card" style="width: 10rem;">
-                <div class="card-body">
-                    <h5 class="card-title"><input type="radio"> KELAS 1 C</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">TP 2023/2024</h6>
-                    <a href="#" class="card-link btn btn-primary btn-sm"><i class="bi bi-person-fill-add"></i></a>
-                    <a href="#" class="card-link btn btn-primary btn-sm"><i class="bi bi-person-fill-dash"></i></a>
-                </div>
+            <div class="modal-footer modal-add-footer">
+                
             </div>
         </div>
     </div>
 </div>
 
-<!-- Add this where you want the button -->
-<button type="button" class="btn btn-primary" id="showModalBtn">Show Modal</button>
+<!-- Modal Edit -->
+<div class="modal" id="editRombelModal" tabindex="-1" aria-labelledby="editRombelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editRombelModalLabel"><i class="bi bi-pencil-square"></i> EDIT ROMBONGAN BELAJAR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Jenjang Kelas</label>
+                    <select name="jenjangEdit" id="jenjangEdit" class="form-control form-control-sm form-edit-rombel">
+                    </select>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Kelas</label>
+                    <select name="kelasEdit" id="kelasEdit" class="form-control form-control-sm form-edit-rombel" disabled>
+                        <option value="">_pilih_</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Wali Kelas</label>
+                    <select name="walikelasEdit" id="walikelasEdit" class="form-control form-control-sm form-edit-rombel">
+                    </select>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Maksimal Siswa/i</label>
+                    <input type="number" class="form-control form-control-sm form-edit-rombel" id="maxEdit">
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Nama Rombel</label>
+                    <input type="text" class="form-control form-control-sm form-edit-rombel" id="rombelEdit" readonly>
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="">Tahun Pelajaran</label>
+                    <input type="text" class="form-control form-control-sm form-edit-rombel" id="tpEdit" readonly>
+                </div>
+            </div>
+            <div class="modal-footer modal-edit-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal" id="configRombelModal" tabindex="-1" aria-labelledby="configRombelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="configRombelModalLabel"><i class="bi bi-gear-fill"></i> KONFIGURASI ROMBONGAN BELAJAR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="siswa-set card">
+                    <div class="card-header"><i class="bi bi-people-fill"></i> Anggota Rombel</div>
+                    <div class="card-body">
+                        <table class="table table-striped table-sm mt-3 tb-ang-rombel">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>No.Induk</th>
+                                    <th>NISN</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Kelas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>16.03490</td>
+                                    <td>0032637485</td>
+                                    <td>Wahid</td>
+                                    <td>laki-laki</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="config-siswa row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header"><i class="bi bi-card-list"></i> Daftar Siswa</div>
+                            <div class="card-body">
+                                <table class="table table-striped table-sm mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>No.Induk</th>
+                                            <th>Nama Siswa</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Kelas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>1</td>
+                                            <td>16.3784</td>
+                                            <td>00251743834</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header"><i class="bi bi-card-checklist"></i> Register Siswa</div>
+                            <div class="card-body">
+                                <div class="button-regis mt-3">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-save-cnf"><i class="bi bi-check-lg"></i> simpan</button>
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-rm-cnf"><i class="bi bi-eraser-fill"></i> hapus list</button>
+                                </div>
+                                <ul class="list-group mt-2">
+                                    <li class="list-group-item">
+                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Wahid Prayogo</span>
+                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Nayla Faizah</span>
+                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Rivansyah</span>
+                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Royhan Asrori</span>
+                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Handri Gunawan</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer modal-edit-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 <script>
 $(document).ready(function() {
-    $('#add-rombel').on('click', function() {  // Changed to use add-rombel button
-        const modal = $.customModal({
-            title: 'Tambah Rombongan Belajar',
-            content: `
-                <form id="rombelForm">
-                    <div class="mb-3">
-                        <label class="form-label">Nama Kelas</label>
-                        <input type="text" class="form-control" id="namaKelas" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tahun Pelajaran</label>
-                        <input type="text" class="form-control" id="tahunPelajaran" value="2023/2024" required>
-                    </div>
-                </form>
-            `,
-            size: 'large',
-            theme: 'light',  // New feature: theme support
-            buttons: [
-                {
-                    text: 'Batal',
-                    class: 'btn-secondary',
-                    click: function() {
-                        modal.hide();
-                    }
-                },
-                {
-                    text: 'Simpan',
-                    class: 'btn-primary',
-                    click: function() {
-                        if ($('#rombelForm')[0].checkValidity()) {
-                            // Handle save action here
-                            const namaKelas = $('#namaKelas').val();
-                            const tahunPelajaran = $('#tahunPelajaran').val();
-                            
-                            // You can add your AJAX call here
-                            console.log('Saving:', { namaKelas, tahunPelajaran });
-                            
-                            // Show success message
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil!',
-                                text: 'Data rombongan belajar berhasil disimpan'
-                            });
-                            
-                            modal.hide();
-                        } else {
-                            $('#rombelForm')[0].reportValidity();
-                        }
-                    }
+
+    $('.tb-ang-rombel').DataTable();
+    
+    // Load rombel
+    loadDataRombel();
+
+    // Add modal
+    $('#add-rombel').on('click', function() {
+        let btnAddModal = `
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> Batal</button>
+        <button type="button" class="btn btn-primary btn-sm save-rombel"><i class="bi bi-check-circle"></i> Simpan</button>`;
+        $('.modal-add-footer').html(btnAddModal);
+
+        $('.form-add-rombel').val('');
+        $('.form-add-rombel').val('').trigger('change');
+
+        $('#tp').val(getTahunPelajaran());
+        $('#addRombelModal').modal('show');
+
+        $('#jenjang').on('change', function(){
+            let jenjang = $(this).val();
+            if(jenjang != ''){
+                $('#kelas').attr('disabled', false);
+            }else{
+                $('#kelas').attr('disabled', true);
+            }
+        })
+        $('#kelas, #jenjang').on('change', function(){
+            let jenjang = $('#jenjang').val();
+            let kelas = $('#kelas').val();
+            if(kelas != '' && jenjang != ''){
+                $('#rombel').val('KELAS '+ jenjang + kelas);
+            }else{
+                $('#rombel').val('');
+            }
+        })
+
+        // load attr
+        var existRombel = [];
+        $.ajax({
+            method: 'POST',
+            url: 'pages/rombel/action-rombel.php',
+            dataType: 'json',
+            data: {action: 'loadattr'},
+            success: function(msg){
+                if(msg.status == 'success'){
+                    // load jenjang
+                    let setJenjang = '<option value="">_pilih_</option>';
+                    $.each(msg.jenjang, function(id,val){
+                        setJenjang += `<option value="${val.jenjang}">${val.romawi} (${val.ket})</option>`;
+                    });
+                    $('#jenjang').html(setJenjang);
+
+                    // load jenjang
+                    let setGuru = '<option value="">_pilih_</option>';
+                    $.each(msg.guru, function(id,val){
+                        setGuru += `<option value="${val.id_guru}">${val.nama_guru} (${val.no_guru})</option>`;
+                    });
+                    $('#walikelas').html(setGuru);
+
+                    // load rombel
+                    $.each(msg.rombel, function(id,val){
+                        existRombel.push(val.ket_rombel);
+                    });
                 }
-            ]
+            }
         });
-        
-        modal.show();
+
+        // save rombel
+        $('.save-rombel').on('click', function(){
+            if(existRombel.includes($('#jenjang').val()+''+$('#kelas').val())){
+                Swal.fire({
+                    title: 'Duplikasi Rombel',
+                    text: 'Rombel '+ $('#jenjang').val()+''+$('#kelas').val() +' sudah ditambahkan',
+                    icon: 'warning'
+                });
+            }else{
+                let datarombel = {
+                    action: 'add',
+                    jenjang: $('#jenjang').val(),
+                    kelas: $('#jenjang').val()+''+$('#kelas').val(),
+                    max: $('#max').val(),
+                    walkel: $('#walikelas').val(),
+                    tp: $('#tp').val(),
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: 'pages/rombel/action-rombel.php',
+                    dataType: 'json',
+                    data: datarombel,
+                    success: function(msg){
+                        if(msg.status == 'success'){
+                            $('.form-add-rombel').val('');
+                            $('.form-add-rombel').val('').trigger('change');
+                            $('#addRombelModal').modal('hide');
+                            loadDataRombel();
+                        }
+
+                        Swal.fire({
+                            title: msg.status,
+                            text: msg.info,
+                            icon: msg.status
+                        });
+                    }, error: function(err){
+                        alert(JSON.stringify(err));
+                    }
+                });
+            }
+        });
     });
 
     // Edit modal
     $('#edit-rombel').on('click', function() {
-        if (!$('.card-title input[type="radio"]:checked').length) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Peringatan',
-                text: 'Silakan pilih kelas yang akan diedit'
-            });
-            return;
-        }
 
-        const modal = $.customModal({
-            title: 'Edit Rombongan Belajar',
-            content: `
-                <form id="editRombelForm">
-                    <div class="mb-3">
-                        <label class="form-label">Nama Kelas</label>
-                        <input type="text" class="form-control" id="editNamaKelas" 
-                               value="${$('.card-title input[type="radio"]:checked').parent().text().trim()}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tahun Pelajaran</label>
-                        <input type="text" class="form-control" id="editTahunPelajaran" value="2023/2024" required>
-                    </div>
-                </form>
-            `,
-            theme: 'light',
-            buttons: [
-                {
-                    text: 'Batal',
-                    class: 'btn-secondary',
-                    click: function() { modal.hide(); }
-                },
-                {
-                    text: 'Update',
-                    class: 'btn-primary',
-                    click: function() {
-                        if ($('#editRombelForm')[0].checkValidity()) {
-                            // Add your update logic here
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil!',
-                                text: 'Data rombongan belajar berhasil diupdate'
-                            });
-                            modal.hide();
-                        } else {
-                            $('#editRombelForm')[0].reportValidity();
-                        }
-                    }
+        let btnAddModal = `
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> Batal</button>
+        <button type="button" class="btn btn-primary btn-sm save-rombel-edit"><i class="bi bi-check-circle"></i> Simpan</button>`;
+        $('.modal-edit-footer').html(btnAddModal);
+
+        $('#jenjangEdit').on('change', function(){
+            let jenjang = $(this).val();
+            if(jenjang != ''){
+                $('#kelasEdit').attr('disabled', false);
+            }else{
+                $('#kelasEdit').attr('disabled', true);
+            }
+        })
+        $('#kelasEdit, #jenjangEdit').on('change', function(){
+            let jenjang = $('#jenjangEdit').val();
+            let kelas = $('#kelasEdit').val();
+            if(kelas != '' && jenjang != ''){
+                $('#rombelEdit').val('KELAS '+ jenjang + kelas);
+            }else{
+                $('#rombelEdit').val('');
+            }
+        })
+
+        // load attr
+        var idrbl = $("input[name='cnfkelas']:checked").val();
+        var existRombel = [];
+        var existRombelDetail;
+        $.ajax({
+            method: 'POST',
+            url: 'pages/rombel/action-rombel.php',
+            dataType: 'json',
+            data: {action: 'loadattr', idrbl: idrbl},
+            success: function(msg){
+                console.log(msg);
+                console.log('id = '+ idrbl)
+                if(msg.status == 'success'){
+                    // exist data
+                    let data = msg.rombeldetail[0];
+                    existRombelDetail = data;
+
+                    // load jenjang
+                    let setJenjang = '<option value="">_pilih_</option>';
+                    $.each(msg.jenjang, function(id,val){
+                        setJenjang += `<option value="${val.jenjang}">${val.romawi} (${val.ket})</option>`;
+                    });
+                    $('#jenjangEdit').html(setJenjang);
+                    $('#jenjangEdit').val(data.jenjang_rombel).trigger('change');
+                    $('#jenjangEdit').prop('disabled', true);
+
+                    // load kelas
+                    $('#kelasEdit').val(data.ket_rombel.slice(-1)).trigger('change');
+                    $('#kelasEdit').prop('disabled', true);
+
+                    // load wali kelas
+                    let setGuru = '<option value="">_pilih_</option>';
+                    $.each(msg.guru, function(id,val){
+                        setGuru += `<option value="${val.id_guru}">${val.nama_guru} (${val.no_guru})</option>`;
+                    });
+                    $('#walikelasEdit').html(setGuru);
+                    $('#walikelasEdit').val(data.walkel_rombel).trigger('change');
+
+                    // load max siswa
+                    $('#maxEdit').val(data.max_siswa);
+
+                    // load tp
+                    $('#tpEdit').val(data.tp_rombel);
+
+                    // load rombel
+                    $.each(msg.rombel, function(id,val){
+                        existRombel.push(val.ket_rombel);
+                    });
                 }
-            ]
+            }
         });
-        
-        modal.show();
+        $('#editRombelModal').modal('show');
+
+
+        // save rombel
+        $('.save-rombel-edit').on('click', function(){
+            let datarombel = {
+                action: 'edit',
+                id: idrbl,
+                max: $('#maxEdit').val(),
+                walkel: $('#walikelasEdit').val()
+            }
+
+            $.ajax({
+                method: 'POST',
+                url: 'pages/rombel/action-rombel.php',
+                dataType: 'json',
+                data: datarombel,
+                success: function(msg){
+                    if(msg.status == 'success'){
+                        $('.form-edit-rombel').val('');
+                        $('.form-edit-rombel').val('').trigger('change');
+                        $('#editRombelModal').modal('hide');
+                        loadDataRombel();
+                    }
+
+                    Swal.fire({
+                        title: msg.status,
+                        text: msg.info,
+                        icon: msg.status
+                    });
+                }, error: function(err){
+                    alert(JSON.stringify(err));
+                }
+            });
+        });
+
     });
 
-    // Delete confirmation
+    // Delete modal
     $('#del-rombel').on('click', function() {
-        if (!$('.card-title input[type="radio"]:checked').length) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Peringatan',
-                text: 'Silakan pilih kelas yang akan dihapus'
-            });
-            return;
-        }
+        var idrbl = $("input[name='cnfkelas']:checked").val();
+        var totalsiswa = $("input[name='cnfkelas']:checked").data('totalsiswa');
+        var kelas = $("input[name='cnfkelas']:checked").data('kelas');
 
-        const modal = $.customModal({
-            title: 'Hapus Rombongan Belajar',
-            content: '<p>Apakah Anda yakin ingin menghapus rombongan belajar ini?</p>',
-            theme: 'light',
-            buttons: [
-                {
-                    text: 'Batal',
-                    class: 'btn-secondary',
-                    click: function() { modal.hide(); }
-                },
-                {
-                    text: 'Hapus',
-                    class: 'btn-danger',
-                    click: function() {
-                        // Add your delete logic here
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: 'Rombongan belajar berhasil dihapus'
-                        });
-                        modal.hide();
-                    }
+        Swal.fire({
+            icon: "question",
+            title: "Hapus Data Rombel",
+            text: "Ingin hapus data rombel kelas "+ kelas +" ?",
+            showCancelButton: true,
+            confirmButtonText: "Hapus",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if(result.isConfirmed){
+                if(totalsiswa != 0){
+                    Swal.fire({
+                        title: 'Gagal',
+                        text: 'Rombel '+ kelas +' terdapat '+ totalsiswa +' siswa aktif. Kosongkan siswa untuk menghapus rombel ini',
+                        icon: 'error'
+                    });
+                }else{
+                    $.ajax({
+                        method: 'POST',
+                        url: 'pages/rombel/action-rombel.php',
+                        dataType: 'json',
+                        data: {action: 'delete', id: idrbl, rombel: kelas},
+                        success: function(msg){
+                            loadDataRombel();
+                            Swal.fire({
+                                title: msg.status,
+                                text: msg.info,
+                                icon: msg.status
+                            });
+                        }, error: function(err){
+                            alert(JSON.stringify(err));
+                        }
+                    });
                 }
-            ]
+            }
         });
-        
-        modal.show();
     });
+
+    // Config modal
+    $('#conf-rombel').on('click', function() {
+        $('#configRombelModal').modal('show')
+    })
 });
+
+
+
+function loadDataRombel(){
+    $.ajax({
+        method: 'POST',
+        url: 'pages/rombel/action-rombel.php',
+        dataType: 'json',
+        data: {action: 'loadrombel'},
+        success: function(data){
+            if(data.status == 'success'){
+                let setRombel = '';
+                $.each(data.rombel, function(id,val){
+                    let max_siswa = val.max_siswa == 0 ? '<i class="bi bi-infinity" style="font-size: 14px;"></i>' : val.max_siswa;
+                    setRombel += `
+                    <div class="card" style="width: 15rem;">
+                        <div class="card-header"><input type="checkbox" name="cnfkelas" id="cnfkelas${val.id}" value="${val.id}" data-totalsiswa="${val.total_siswa}" data-kelas="${val.kelas}">&nbsp; <label for="cnfkelas${val.id}">${val.kelas}</label></div>
+                        <div class="card-body">
+                            <h5 class="card-title">TP ${val.tp_rombel}</h5>
+                            <span class="badge bg-primary">Wali Kelas:&nbsp; <i class="bi bi-person-fill"></i> ${val.nama_guru}</span>
+                            <br>
+                            <span class="badge bg-primary">Total Siswa: ${val.total_siswa}/${max_siswa}</span>
+                        </div>
+                    </div>`;
+                });
+                $('.loading-rombel').css('display', 'none');
+                $('.set-rombel').html(setRombel);
+                $('.set-rombel').css('display', 'contents');
+            }
+
+            $('input[name="cnfkelas"]').on('change', function() {
+                // Hilangkan checklist dari semua checkbox lain
+                $('input[name="cnfkelas"]').not(this).prop('checked', false);
+
+                // Cek apakah ada yang dicentang
+                if ($('input[name="cnfkelas"]:checked').length > 0) {
+                    $('#edit-rombel').prop('disabled', false);
+                    $('#del-rombel').prop('disabled', false);
+                    $('#conf-rombel').prop('disabled', false);
+                } else {
+                    $('#edit-rombel').prop('disabled', true);
+                    $('#del-rombel').prop('disabled', true);
+                    $('#conf-rombel').prop('disabled', true);
+                }
+            });
+        }
+    });
+}
+
+
+
+function getTahunPelajaran() {
+    const now = new Date();
+    const tahun = now.getFullYear();
+    const bulan = now.getMonth(); // Januari=0 ... Desember=11
+
+    let tahunPelajaran;
+    if (bulan <= 5) { 
+        // Januari s/d Juni → (tahun sebelumnya/tahun sekarang)
+        tahunPelajaran = (tahun - 1) + "/" + tahun;
+    } else { 
+        // Juli s/d Desember → (tahun sekarang/tahun depan)
+        tahunPelajaran = tahun + "/" + (tahun + 1);
+    }
+
+    return tahunPelajaran;
+}
+
+
 </script>
