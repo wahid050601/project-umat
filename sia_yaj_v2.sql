@@ -24,16 +24,16 @@ DROP TABLE IF EXISTS `tb_guru`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_guru` (
   `id_guru` int NOT NULL AUTO_INCREMENT,
-  `no_guru` varchar(50) DEFAULT NULL,
-  `nama_guru` varchar(50) DEFAULT NULL,
-  `nuptk` varchar(50) DEFAULT NULL,
-  `mapel_guru` varchar(50) DEFAULT NULL,
-  `jabatan` varchar(50) DEFAULT NULL,
-  `alamat_guru` varchar(100) DEFAULT NULL,
-  `tlp_guru` varchar(20) DEFAULT NULL,
-  `email_guru` varchar(100) DEFAULT NULL,
+  `no_guru` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nama_guru` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nuptk` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mapel_guru` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jabatan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat_guru` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tlp_guru` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email_guru` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_guru`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,13 +149,13 @@ DROP TABLE IF EXISTS `tb_rombel`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_rombel` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `jenjang_rombel` varchar(5) DEFAULT NULL,
-  `ket_rombel` varchar(30) DEFAULT NULL,
-  `tp_rombel` varchar(15) DEFAULT NULL,
+  `jenjang_rombel` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ket_rombel` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tp_rombel` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `walkel_rombel` int DEFAULT NULL,
   `max_siswa` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +180,7 @@ CREATE TABLE `tb_rombel_set` (
   `id_rombel` int DEFAULT NULL,
   `id_siswa` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,20 +202,20 @@ DROP TABLE IF EXISTS `tb_siswa`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_siswa` (
   `id_siswa` int NOT NULL AUTO_INCREMENT,
-  `nis_siswa` varchar(8) NOT NULL,
-  `nisn_siswa` varchar(12) DEFAULT NULL,
-  `nik_siswa` varchar(20) DEFAULT NULL,
-  `nama_siswa` varchar(50) NOT NULL,
-  `jk_siswa` varchar(20) NOT NULL,
-  `tplahir_siswa` varchar(30) NOT NULL,
+  `nis_siswa` varchar(8) COLLATE utf8mb4_general_ci NOT NULL,
+  `nisn_siswa` varchar(12) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nik_siswa` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nama_siswa` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `jk_siswa` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `tplahir_siswa` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `tgl_lahir` date NOT NULL,
-  `ayah_siswa` varchar(50) DEFAULT NULL,
-  `ibu_siswa` varchar(50) DEFAULT NULL,
+  `ayah_siswa` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ibu_siswa` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `kelas_siswa` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `rombel_siswa` varchar(10) DEFAULT NULL,
-  `telp_siswa` varchar(20) DEFAULT NULL,
+  `rombel_siswa` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `telp_siswa` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_siswa`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,4 +267,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-07 12:28:07
+-- Dump completed on 2025-09-07 13:01:37
