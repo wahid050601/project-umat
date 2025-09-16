@@ -4,6 +4,11 @@
         flex-wrap: wrap;
         gap: 20px;
    }
+
+   .tb-list-siswa tbody tr.selectedrow {
+        background-color: #b8daff !important;
+        color: #212529;
+    }
 </style>
 
 <div class="card">
@@ -162,19 +167,12 @@
                                     <th>No.Induk</th>
                                     <th>NISN</th>
                                     <th>Nama Siswa</th>
-                                    <th>Jenis Kelamin</th>
+                                    <th>L/P</th>
                                     <th>Kelas</th>
+                                    <th>Rombel</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>16.03490</td>
-                                    <td>0032637485</td>
-                                    <td>Wahid</td>
-                                    <td>laki-laki</td>
-                                    <td>1</td>
-                                </tr>
+                            <tbody class="put-ang-rombel">
                             </tbody>
                         </table>
                     </div>
@@ -185,24 +183,17 @@
                         <div class="card">
                             <div class="card-header"><i class="bi bi-card-list"></i> Daftar Siswa</div>
                             <div class="card-body">
-                                <table class="table table-striped table-sm mt-3">
+                                <table class="table table-hover table-sm mt-3 tb-list-siswa">
                                     <thead>
                                         <tr>
                                             <th></th>
                                             <th>No.Induk</th>
                                             <th>Nama Siswa</th>
-                                            <th>Jenis Kelamin</th>
+                                            <th>L/P</th>
                                             <th>Kelas</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>1</td>
-                                            <td>16.3784</td>
-                                            <td>00251743834</td>
-                                            <td>1</td>
-                                        </tr>
+                                    <tbody class="put-list-siswa">
                                     </tbody>
                                 </table>
                             </div>
@@ -212,17 +203,15 @@
                         <div class="card">
                             <div class="card-header"><i class="bi bi-card-checklist"></i> Register Siswa</div>
                             <div class="card-body">
-                                <div class="button-regis mt-3">
-                                    <button type="button" class="btn btn-primary btn-sm" id="btn-save-cnf"><i class="bi bi-check-lg"></i> simpan</button>
-                                    <button type="button" class="btn btn-primary btn-sm" id="btn-rm-cnf"><i class="bi bi-eraser-fill"></i> hapus list</button>
-                                </div>
+                                <div class="button-regis mt-3"></div>
                                 <ul class="list-group mt-2">
-                                    <li class="list-group-item">
-                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Wahid Prayogo</span>
+                                    <li class="list-group-item put-label-siswa-rombel">
+                                        <div class="notice-select text-center"><i class="bi bi-arrow-left-circle-fill"></i> Pilih Data Siswa Pada Table Sebelah Kiri</div>
+                                        <!-- <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Wahid Prayogo</span>
                                         <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Nayla Faizah</span>
                                         <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Rivansyah</span>
                                         <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Royhan Asrori</span>
-                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Handri Gunawan</span>
+                                        <span class="badge bg-primary"><i class="bi bi-x-lg" style="cursor: pointer;"></i> Handri Gunawan</span> -->
                                     </li>
                                 </ul>
                             </div>
@@ -246,10 +235,10 @@
 
 
 <script>
-$(document).ready(function() {
+// array config rombel siswa
+var configRombel = [];
 
-    $('.tb-ang-rombel').DataTable();
-    
+$(document).ready(function() {
     // Load rombel
     loadDataRombel();
 
@@ -519,8 +508,66 @@ $(document).ready(function() {
 
     // Config modal
     $('#conf-rombel').on('click', function() {
-        $('#configRombelModal').modal('show')
-    })
+        let alertCnf = '<div class="notice-select text-center"><i class="bi bi-arrow-left-circle-fill"></i> Pilih Data Siswa Pada Table Sebelah Kiri</div>';
+        let buttonReg = `<button type="button" class="btn btn-primary btn-sm" id="btn-save-cnf"><i class="bi bi-check-lg"></i> simpan</button>`;
+        $('.button-regis').html(buttonReg);
+        $('.put-label-siswa-rombel').html(alertCnf);
+        configRombel = [];
+
+        var idrbl = $("input[name='cnfkelas']:checked").val();
+        var totalsiswa = $("input[name='cnfkelas']:checked").data('totalsiswa');
+        var kelas = $("input[name='cnfkelas']:checked").data('jenjang');
+        var kelasshow = $("input[name='cnfkelas']:checked").data('kelas');
+
+        loadAnggotaRombel(idrbl,kelas);
+        loadListSiswa(kelas);
+        $('#configRombelModal').modal('show');
+
+        //Save Config
+        $('#btn-save-cnf').on('click', function(){
+            if(configRombel.length == 0){
+                Swal.fire({
+                    title: 'Data Siswa Kosong',
+                    text: 'Tidak ada data siswa pada list konfigurasi Rombel',
+                    icon: 'warning'
+                });
+            }else{
+                Swal.fire({
+                    icon: "question",
+                    title: "Konfigurasi Rombel",
+                    text: "simpan konfigurasi rombel pada kelas "+ kelasshow +" ?",
+                    showCancelButton: true,
+                    confirmButtonText: "Simpan",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        $.ajax({
+                            method: 'POST',
+                            url: 'pages/rombel/action-rombel.php',
+                            dataType: 'json',
+                            data: {
+                                action: 'config',
+                                id: idrbl,
+                                siswa: JSON.stringify(configRombel)
+                            },
+                            success: function(msg){
+                                $('.put-label-siswa-rombel').html(alertCnf);
+                                configRombel = [];
+                                loadAnggotaRombel(idrbl,kelas);
+                                loadListSiswa(kelas);
+
+                                Swal.fire({
+                                    title: msg.status,
+                                    text: msg.info,
+                                    icon: msg.status
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        })
+    });
 });
 
 
@@ -538,7 +585,7 @@ function loadDataRombel(){
                     let max_siswa = val.max_siswa == 0 ? '<i class="bi bi-infinity" style="font-size: 14px;"></i>' : val.max_siswa;
                     setRombel += `
                     <div class="card" style="width: 15rem;">
-                        <div class="card-header"><input type="checkbox" name="cnfkelas" id="cnfkelas${val.id}" value="${val.id}" data-totalsiswa="${val.total_siswa}" data-kelas="${val.kelas}">&nbsp; <label for="cnfkelas${val.id}">${val.kelas}</label></div>
+                        <div class="card-header"><input type="checkbox" name="cnfkelas" id="cnfkelas${val.id}" value="${val.id}" data-totalsiswa="${val.total_siswa}" data-kelas="${val.kelas}" data-jenjang="${val.jenjang_rombel}">&nbsp; <label for="cnfkelas${val.id}">${val.kelas}</label></div>
                         <div class="card-body">
                             <h5 class="card-title">TP ${val.tp_rombel}</h5>
                             <span class="badge bg-primary">Wali Kelas:&nbsp; <i class="bi bi-person-fill"></i> ${val.nama_guru}</span>
@@ -569,6 +616,116 @@ function loadDataRombel(){
             });
         }
     });
+}
+
+function loadAnggotaRombel(id,kelas){
+    $.ajax({
+        method: 'POST',
+        url: 'pages/rombel/action-rombel.php',
+        dataType: 'json',
+        data: {
+            action: 'loadsiswarombel',
+            id: id,
+            kelas: kelas
+        },
+        success: function(data){
+            $('.tb-ang-rombel').DataTable().destroy();
+            let setRow = '';
+            let nums = 1;
+            $.each(data.siswa, function(id,val){
+                setRow += `
+                <tr>
+                    <td>${nums++}</td>
+                    <td>${val.nis_siswa}</td>
+                    <td>${val.nisn_siswa}</td>
+                    <td>${val.nama_siswa}</td>
+                    <td>${val.jk_siswa}</td>
+                    <td>${val.kelas_siswa}</td>
+                    <td>${val.rombel_siswa}</td>
+                </tr>`;
+            });
+            $('.put-ang-rombel').html(setRow);
+            $('.tb-ang-rombel').DataTable();
+        }
+    });
+}
+
+function loadListSiswa(kelas){
+    $.ajax({
+        method: 'POST',
+        url: 'pages/rombel/action-rombel.php',
+        dataType: 'json',
+        data: {
+            action: 'loadlistsiswa',
+            kelas: kelas
+        },
+        success: function(data){
+            $('.tb-list-siswa').DataTable().destroy();
+            let setRow = '';
+            let nums = 1;
+            $.each(data.daftar_siswa, function(id,val){
+                setRow += `
+                <tr>
+                    <td><input type="checkbox" value="${val.id_siswa}" data-nama="${val.nama_siswa}" data-nis="${val.nis_siswa}"></td>
+                    <td>${val.nis_siswa}</td>
+                    <td>${val.nama_siswa}</td>
+                    <td>${val.jk_siswa}</td>
+                    <td>${val.kelas_siswa}</td>
+                </tr>`;
+            });
+            $('.put-list-siswa').html(setRow);
+            $('.tb-list-siswa').DataTable();
+
+            //selected rows
+            $(".tb-list-siswa tbody tr").on("click", function(e) {
+                if (!$(e.target).is(":checkbox")) {
+                    let $checkbox = $(this).find("input[type=checkbox]");
+                    $checkbox.prop("checked", !$checkbox.prop("checked"));
+                }
+
+                let $checkbox = $(this).find("input[type=checkbox]");
+                let value = $checkbox.val();
+                let siswa = $checkbox.data('nama');
+                let nis = $checkbox.data('nis');
+
+                if ($checkbox.prop("checked")) {
+                    // tambahkan kalau belum ada
+                    configRombelSiswa(value,siswa,nis)
+                    $(this).addClass("selected");
+                } else {
+                    // hapus kalau ada
+                    configRombelSiswa(value,siswa,nis,false)
+                    $(this).removeClass("selected");
+                }
+            });
+        }
+    });
+}
+
+function configRombelSiswa(value,siswa,nis,check=true){
+    if(check){
+        if (!configRombel.some(item => item.id === value)) {
+            configRombel.push({
+                id: value,
+                siswa: siswa,
+                nis: nis,
+            });
+        }
+    }else{
+        configRombel = configRombel.filter(item => item.id !== value);
+    }
+    
+    //Loop set label siswa
+    let labelSiswa = '';
+    configRombel.forEach(vals => {
+        labelSiswa += `
+        <span class="badge bg-primary" style="cursor: pointer;">${vals.nis}-${vals.siswa}</span>`;
+    });
+    $('.put-label-siswa-rombel').html(labelSiswa);
+    if(configRombel.length == 0){
+        let alert = '<div class="notice-select text-center"><i class="bi bi-arrow-left-circle-fill"></i> Pilih Data Siswa Pada Table Sebelah Kiri</div>';
+        $('.put-label-siswa-rombel').html(alert);
+    }
 }
 
 

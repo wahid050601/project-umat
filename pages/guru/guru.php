@@ -98,6 +98,7 @@
                             <option value="kepsek">Kepala Sekolah</option>
                             <option value="wakepsek">Wakil Kepala Sekolah</option>
                             <option value="bendahara">Bendahara</option>
+                            <option value="walikelas">Wali Kelas</option>
                             <option value="staff">Staff</option>
                         </select>
                     </div>
@@ -150,10 +151,11 @@
                     <div class="form-group  mt-2 mb-2">
                         <label for="jabatanguruEdit">Jabatan</label>
                         <select class="form-control form-control-sm form-add-guru" id="jabatanguruEdit">
-                            <option value="">_pilih_</option>
+                            <option value="">_pili h_</option>
                             <option value="guru">Guru</option>
                             <option value="kepsek">Kepala Sekolah</option>
                             <option value="wakepsek">Wakil Kepala Sekolah</option>
+                            <option value="walikelas">Wali Kelas</option>
                             <option value="bendahara">Bendahara</option>
                             <option value="staff">Staff</option>
                         </select>

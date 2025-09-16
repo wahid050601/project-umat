@@ -100,7 +100,90 @@ if(isset($_POST["action"])){
             }
         break;
 
+        case "loadsiswarombel":
+            $id = $_POST["id"];
+            $kelas = $_POST["kelas"];
 
+            try{
+                // Get siswa exists rombel
+                $getSiswaExist = "
+                select a.id_siswa,
+                c.id as id_rombel,
+                b.id as id_rombel_set,
+                a.nis_siswa,
+                a.nisn_siswa,
+                a.nik_siswa,
+                a.nama_siswa,
+                a.jk_siswa,
+                a.kelas_siswa,
+                CONCAT('Kelas ', c.ket_rombel) as rombel_siswa 
+                from tb_siswa a
+                left join tb_rombel_set b on a.id_siswa = b.id_siswa
+                left join tb_rombel c on b.id_rombel = c.id
+                where c.id = $id";
+                $execSiswa = $connect->query($getSiswaExist);
+                $siswa = [];
+                while($row = $execSiswa->fetch_assoc()){
+                    $siswa[] = $row;
+                }
+
+                echo json_encode([
+                    "status" => "success",
+                    "info" => "Berhasil Ambil Data Siswa Rombel",
+                    "siswa" => $siswa
+                ]);
+
+            }catch(Exception $th){
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Error Message : ". $th->getMessage()
+                ]);
+            }
+        break;
+
+        case "loadlistsiswa":
+            $kelas = $_POST["kelas"];
+
+            try{
+                // Get daftar siswa
+                $getDaftarSsiwa = "
+                select a.id_siswa,
+                c.id as id_rombel,
+                b.id as id_rombel_set,
+                a.nis_siswa,
+                a.nisn_siswa,
+                a.nik_siswa,
+                a.nama_siswa,
+                a.jk_siswa,
+                a.kelas_siswa,
+                CONCAT('Kelas ', c.ket_rombel) as rombel_siswa 
+                from tb_siswa a
+                left join tb_rombel_set b on a.id_siswa = b.id_siswa
+                left join tb_rombel c on b.id_rombel = c.id
+                where COALESCE(CONCAT('Kelas ', c.ket_rombel), '') = '' and a.kelas_siswa = '$kelas'";
+                $execDafSiswa = $connect->query($getDaftarSsiwa);
+                $daftar_siswa = [];
+                while($row = $execDafSiswa->fetch_assoc()){
+                    $daftar_siswa[] = $row;
+                }
+
+
+                echo json_encode([
+                    "status" => "success",
+                    "info" => "Berhasil Ambil Data Siswa",
+                    "daftar_siswa" => $daftar_siswa
+                ]);
+
+            }catch(Exception $th){
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Error Message : ". $th->getMessage()
+                ]);
+            }
+        break;
+
+
+        // ======= CRUD FUNCTION
         case "add":
             $jenjang = $_POST["jenjang"];
             $kelas = $_POST["kelas"];
@@ -191,6 +274,31 @@ if(isset($_POST["action"])){
                 ]);
             }
         break;
+
+        case "config":
+            $idrombel = $_POST["id"];
+            $datasiswa = json_decode($_POST["siswa"], true);
+
+            $countInsert = 0;
+            foreach($datasiswa as $ds){
+                $insertQ = "insert into tb_rombel_set (id_rombel, id_siswa) values (". $idrombel .", ". $ds["id"] .")";
+                $exec = $connect->query($insertQ);
+                if($exec){$countInsert++;}
+            }
+
+            $status = "success";
+            $info = "Data Siswa Berhasil di Tambah Pada Rombel : $countInsert Siswa";
+            if($countInsert == 0){
+                $status = "error";
+                $info = "Data Siswa Gagal di Konfigurasi";
+            }
+
+            echo json_encode([
+                "status" => $status,
+                "info" => $info
+            ]);
+        break;
+
     } 
 }else{
     echo json_encode([

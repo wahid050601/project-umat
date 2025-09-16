@@ -11,7 +11,23 @@ if(isset($_POST["action"])){
 
         case "getdatasiswa" :
             try {
-                $getSiswa = "select * from tb_siswa";
+                $getSiswa = "
+                select a.id_siswa,
+                a.nis_siswa,
+                coalesce(a.nisn_siswa, '') as nisn_siswa,
+                coalesce(a.nik_siswa, '') as nik_siswa,
+                a.nama_siswa,
+                a.jk_siswa,
+                a.tplahir_siswa,
+                a.tgl_lahir,
+                a.ayah_siswa,
+                a.ibu_siswa,
+                a.kelas_siswa,
+                coalesce(c.ket_rombel, '') as rombel_siswa,
+                coalesce(a.telp_siswa, '') as telp_siswa
+                from tb_siswa a
+                left join tb_rombel_set b on a.id_siswa = b.id_siswa
+                left join tb_rombel c on c.id = b.id_rombel ";
                 $exec = $conn->query($getSiswa);
                 $data_siswa = [];
                 while($row = $exec->fetch_assoc()){

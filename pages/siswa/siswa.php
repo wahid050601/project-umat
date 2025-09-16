@@ -40,7 +40,7 @@
               <th class="text-center">NISN</th>
               <th class="text-center">NIK</th>
               <th class="text-center">Nama Siswa</th>
-              <th class="text-center">Jenis Kelamin</th>
+              <th class="text-center">L/P</th>
               <th class="text-center">Tempat Lahir</th>
               <th class="text-center">Tanggal Lahir</th>
               <th class="text-center">Nama Ayah</th>
@@ -118,9 +118,12 @@
                         <label for="kelassiswa">Kelas</label></label>
                         <select class="form-control form-control-sm form-add-siswa" id="kelassiswa">
                             <option value="">_pilih_</option>
-                            <option value="VII">VII (Tujuh)</option>
-                            <option value="VIII">VIII (Delapan)</option>
-                            <option value="IX">IX (Sembilan)</option>
+                            <option value="1">I (Satu)</option>
+                            <option value="2">II (Dua)</option>
+                            <option value="3">III (Tiga)</option>
+                            <option value="4">IV (Empat)</option>
+                            <option value="5">V (Lima)</option>
+                            <option value="6">VI (Enam)</option>
                         </select>
                     </div>
                 </div>
@@ -194,9 +197,12 @@
                         <label for="kelassiswaEdit">Kelas</label></label>
                         <select class="form-control form-control-sm form-edit-siswa" id="kelassiswaEdit">
                             <option value="">_pilih_</option>
-                            <option value="VII">VII (Tujuh)</option>
-                            <option value="VIII">VIII (Delapan)</option>
-                            <option value="IX">IX (Sembilan)</option>
+                            <option value="1">I (Satu)</option>
+                            <option value="2">II (Dua)</option>
+                            <option value="3">III (Tiga)</option>
+                            <option value="4">IV (Empat)</option>
+                            <option value="5">V (Lima)</option>
+                            <option value="6">VI (Enam)</option>
                         </select>
                     </div>
                 </div>
@@ -398,19 +404,19 @@ $(document).ready(function() {
                 $.each(msg.datasiswa, function(id,val){
                     setData += `
                     <tr>
-                        <td data-id="${val.id_siswa}">${num++}</td>
-                        <td data-nis="${val.nis_siswa}">${val.nis_siswa}</td>
-                        <td data-nisn="${val.nisn_siswa}">${val.nisn_siswa}</td>
-                        <td data-nik="${val.nik_siswa}">${val.nik_siswa}</td>
+                        <td data-id="${val.id_siswa}" class="text-center">${num++}</td>
+                        <td data-nis="${val.nis_siswa}" class="text-center">${val.nis_siswa}</td>
+                        <td data-nisn="${val.nisn_siswa}" class="text-center">${(val.nisn_siswa == '' ? '-' : val.nisn_siswa)}</td>
+                        <td data-nik="${val.nik_siswa}" class="text-center">${(val.nik_siswa == '' ? '-' : val.nik_siswa)}</td>
                         <td data-nama="${val.nama_siswa}">${val.nama_siswa}</td>
-                        <td data-jk="${val.jk_siswa}">${val.jk_siswa}</td>
+                        <td data-jk="${val.jk_siswa}" class="text-center">${val.jk_siswa}</td>
                         <td data-tplahir="${val.tplahir_siswa}">${val.tplahir_siswa}</td>
                         <td data-tglahir="${val.tgl_lahir}">${val.tgl_lahir}</td>
                         <td data-ayah="${val.ayah_siswa}">${val.ayah_siswa}</td>
                         <td data-ibu="${val.ibu_siswa}">${val.ibu_siswa}</td>
-                        <td data-kelas="${val.kelas_siswa}">${val.kelas_siswa}</td>
-                        <td>${val.rombel_siswa}</td>
-                        <td data-tlp="${val.telp_siswa}">${val.telp_siswa}</td>
+                        <td data-kelas="${val.kelas_siswa}" class="text-center">${val.kelas_siswa}</td>
+                        <td class="text-center">${(val.rombel_siswa == '' ? '-' : val.rombel_siswa)}</td>
+                        <td data-tlp="${val.telp_siswa}" class="text-center">${(val.telp_siswa == '' ? '-' : val.telp_siswa)}</td>
                     </tr>`;
                 });
                 $('.put-data-siswa').html(setData);
