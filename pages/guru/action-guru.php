@@ -8,7 +8,17 @@ if(isset($_POST["action"])){
         
         case "loadguru" :
             try {
-                $getGuru = "select * from tb_guru";
+                $getGuru = "
+                select id_guru,
+                no_guru,
+                nama_guru,
+                coalesce(nuptk, '') as nuptk,
+                coalesce(mapel_guru, '') as mapel_guru,
+                jabatan,
+                alamat_guru,
+                tlp_guru,
+                email_guru
+                from tb_guru";
                 $exec = $connect->query($getGuru);
                 $dataguru = [];
                 while($row = $exec->fetch_assoc()){

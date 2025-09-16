@@ -359,14 +359,14 @@
                     setDataGuru += `
                     <tr>
                         <td data-id="${val.id_guru}">${num++}</td>
-                        <td data-noguru="${val.no_guru}">${val.no_guru}</td>
+                        <td data-noguru="${val.no_guru}" class="text-center">${val.no_guru}</td>
                         <td data-nama="${val.nama_guru}">${val.nama_guru}</td>
-                        <td data-nuptk="${val.nuptk}">${val.nuptk}</td>
+                        <td data-nuptk="${val.nuptk}" class="text-center">${(val.nuptk == '' ? '-' : val.nuptk)}</td>
                         <td data-alamat="${val.alamat_guru}">${val.alamat_guru}</td>
                         <td data-tlp="${val.tlp_guru}">${val.tlp_guru}</td>
                         <td data-email="${val.email_guru}">${val.email_guru}</td>
-                        <td>${val.mapel_guru}</td>
-                        <td data-jabatan="${val.jabatan}">${val.jabatan}</td>
+                        <td>${(val.mapel_guru == '' ? '-' : val.mapel_guru)}</td>
+                        <td data-jabatan="${val.jabatan}" class="text-center">${val.jabatan}</td>
                     </tr>`;
                 });
                 $('.put-data-guru').html(setDataGuru);
