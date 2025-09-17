@@ -250,7 +250,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                                 <i class="bi bi-people"></i>
                             </div>
                             <div class="ps-3">
-                                <h6>250</h6>
+                                <h6 class="total-siswa"></h6>
                                 <span class="text-muted small pt-2">Siswa Aktif</span>
                             </div>
                             </div>
@@ -268,7 +268,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                                 <i class="bi bi-person-workspace"></i>
                             </div>
                             <div class="ps-3">
-                                <h6>25</h6>
+                                <h6 class="total-guru"></h6>
                                 <span class="text-muted small pt-2">Guru Aktif</span>
                             </div>
                             </div>
@@ -286,7 +286,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                                 <i class="bi bi-building"></i>
                             </div>
                             <div class="ps-3">
-                                <h6>12</h6>
+                                <h6 class="total-rombel"></h6>
                                 <span class="text-muted small pt-2">Kelas Aktif</span>
                             </div>
                             </div>
@@ -304,7 +304,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                                 <i class="bi bi-calendar3"></i>
                             </div>
                             <div class="ps-3">
-                                <h6>48</h6>
+                                <h6 class="total-jadwal"></h6>
                                 <span class="text-muted small pt-2">Jadwal Aktif</span>
                             </div>
                             </div>
@@ -322,25 +322,25 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="institution-info">
-                                            <h4>MI Yayasan Al-Jihad</h4>
-                                            <p><i class="bi bi-geo-alt"></i> Jl. Terusan Jend. Sudirman No.12, Malang</p>
-                                            <p><i class="bi bi-envelope"></i> info@miyaj.sch.id</p>
-                                            <p><i class="bi bi-telephone"></i> (0341) 123456</p>
+                                            <h4 class="nama-sekolah">MI Yayasan Al-Jihad</h4>
+                                            <!-- <p><i class="bi bi-geo-alt"></i> Jl. Terusan Jend. Sudirman No.12, Malang</p> -->
+                                            <p><i class="bi bi-envelope"></i> <span class="email-sekolah"></span></p>
+                                            <p><i class="bi bi-telephone"></i> <span class="telp-sekolah"></span></p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="institution-stats">
                                             <div class="stat-item">
                                                 <span class="label">Akreditasi</span>
-                                                <span class="value">A</span>
+                                                <span class="akreditasi">A</span>
                                             </div>
                                             <div class="stat-item">
                                                 <span class="label">Tahun Berdiri</span>
-                                                <span class="value">1985</span>
+                                                <span class="tahun-berdiri">1985</span>
                                             </div>
                                             <div class="stat-item">
                                                 <span class="label">NPSN</span>
-                                                <span class="value">20123456</span>
+                                                <span class="npsn">20123456</span>
                                             </div>
                                         </div>
                                     </div>
@@ -390,9 +390,32 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
 
     <!-- Utility JS -->
     <script>
+        loadDashboard();
+
         function HtmlLoad(url) {
-        $('.tampil').empty();
-        $('.tampil').load(url);
+            $('.tampil').empty();
+            $('.tampil').load(url);
+        }
+
+        function loadDashboard(){
+            $.ajax({
+                method: 'POST',
+                url: 'dashboard.php',
+                dataType: 'json',
+                success: function(ds){
+                    $('.total-siswa').html(ds.siswa);
+                    $('.total-guru').html(ds.guru);
+                    $('.total-rombel').html(ds.rombel);
+                    $('.total-jadwal').html(ds.jadwal);
+
+                    $('.nama-sekolah').html(ds.profil.nama_sekolah);
+                    $('.email-sekolah').html(ds.profil.email_sekolah);
+                    $('.telp-sekolah').html(ds.profil.no_telp);
+                    $('.akreditasi').html(ds.profil.status_akreditasi);
+                    $('.tahun-berdiri').html(ds.profil.tahun_berdiri);
+                    $('.npsn').html((ds.profil.npsn == '' ? '-' : ds.profil.npsn));
+                }
+            })
         }
     </script>
 </body>
