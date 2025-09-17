@@ -9,16 +9,18 @@ if(isset($_POST["action"])){
         case "loadguru" :
             try {
                 $getGuru = "
-                select id_guru,
-                no_guru,
-                nama_guru,
-                coalesce(nuptk, '') as nuptk,
-                coalesce(mapel_guru, '') as mapel_guru,
-                jabatan,
-                alamat_guru,
-                tlp_guru,
-                email_guru
-                from tb_guru";
+                select a.id_guru,
+                a.no_guru,
+                a.nama_guru,
+                coalesce(a.nuptk, '') as nuptk,
+                GROUP_CONCAT(b.mapel ORDER BY b.mapel SEPARATOR ', ') as mapel_guru,
+                a.jabatan,
+                a.alamat_guru,
+                a.tlp_guru,
+                a.email_guru
+                from tb_guru a
+                left join tb_jadwal_mapel b on a.id_guru = b.guru_mapel
+                group by a.id_guru, a.nama_guru";
                 $exec = $connect->query($getGuru);
                 $dataguru = [];
                 while($row = $exec->fetch_assoc()){

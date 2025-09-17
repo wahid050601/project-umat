@@ -12,7 +12,7 @@
 
                 if (isset($_POST["getkelas"])) {
 
-                    $getkelas = "select concat(kelas_siswa,'-',rombel_siswa) as id_kelas,rombel_siswa as kelas from sia_yaj.tb_siswa group by kelas_siswa ,rombel_siswa order by kelas_siswa asc";
+                    $getkelas = "select * from tb_rombel order by ket_rombel asc";
                     $execKelas = mysqli_query($connect, $getkelas);
                     $kelas = [];
                     while($row = mysqli_fetch_assoc($execKelas)){
@@ -27,7 +27,16 @@
                 if(isset($_POST["datahari"])){
                     $namahari = $_POST["datahari"];
                     
-                    $query = "select * from tb_jadwal_mapel where hari = '$namahari'";
+                    $query = "select 
+                    a.id,
+                    a.hari,
+                    a.jam_ke,
+                    a.waktu_mulai,
+                    a.waktu_selesai,
+                    a.mapel,
+                    b.nama_guru as guru_mapel
+                    from tb_jadwal_mapel a
+                    left join tb_guru b on a.guru_mapel = b.id_guru where a.hari = '$namahari'";
                     $execQuery = mysqli_query($connect, $query);
                     $dataJadwal = [];
                     while($rowsjadwal = mysqli_fetch_assoc($execQuery)){

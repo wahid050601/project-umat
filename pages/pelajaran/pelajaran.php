@@ -112,7 +112,16 @@
                     <br>
                     <div class="form-group">
                         <select name="" id="" class="form-control form-control-sm formSelectMapel">
-                            <!-- Select Here -->
+                            <option value="">_pilih mapel_</option>
+                            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                            <option value="Matematika">Matematika</option>
+                            <option value="Ilmu Pengetahuan Alam (IPA)">Ilmu Pengetahuan Alam (IPA)</option>
+                            <option value="Ilmu Pengetahuan Sosial (IPS)">Ilmu Pengetahuan Sosial (IPS)</option>
+                            <option value="Pendidikan Pancasila & Kewarganegaraan (PPKn)">Pendidikan Pancasila & Kewarganegaraan (PPKn)</option>
+                            <option value="Pendidikan Agama">Pendidikan Agama</option>
+                            <option value="Seni Budaya & Keterampilan (SBK)">Seni Budaya & Keterampilan (SBK)</option>
+                            <option value="endidikan Jasmani, Olahraga & Kesehatan (PJOK)">Pendidikan Jasmani, Olahraga & Kesehatan (PJOK)</option>
+                            <option value="Bahasa Inggris">Bahasa Inggris</option>
                         </select>
                     </div>
                     <br>
@@ -153,9 +162,9 @@
                 // console.log(datakelas);
                 let showkelas = '<option value="">__pilih kelas__</option>';
                 $.each(datakelas.datakelas, function(id,val){
-                    showkelas += '<option value="'+val.id_kelas+'">'+val.kelas+'</option>';
+                    showkelas += '<option value="'+val.id+'">KELAS '+val.ket_rombel+'</option>';
                 });
-                $('#select-kelas').append(showkelas);
+                $('#select-kelas').html(showkelas);
             }
         });
         
@@ -168,7 +177,7 @@
         $('#waktuMulai').val('');
         $('#waktuSelesai').val('');
         $('.formSelectGuru').empty();
-        $('.formSelectGuru').append('<option>__Pilih Guru__</option>');
+        $('.formSelectGuru').append('<option>_pilih guru_</option>');
         $('.formSelectGuru').attr('disabled', true);
 
         let datahari = $('.day-jadwal').text();
@@ -184,16 +193,16 @@
                 $.each(msg.datagurumapel, function(index, value){
                     datamapel += '<option value="'+value.mapel_guru+'">'+value.mapel_guru+'</option>';
                 });
-                $('.formSelectMapel').empty();
-                $('.formSelectMapel').append(datamapel);
+                // $('.formSelectMapel').empty();
+                // $('.formSelectMapel').append(datamapel);
 
                 $('.formSelectMapel').on('change', function(){
-                    let dataguru = '<option>__Pilih Guru__</option>';
+                    let dataguru = '<option>_pilih guru_</option>';
                     $.each(msg.datagurumapel, function(index, value){
-                        dataguru += '<option value="'+value.nama_guru+'">'+value.nama_guru+'</option>';
+                        dataguru += '<option value="'+value.id_guru+'">'+value.nama_guru+'</option>';
                     });
                     $('.formSelectGuru').empty();
-                    $('.formSelectGuru').append(dataguru);
+                    $('.formSelectGuru').html(dataguru);
                     $('.formSelectGuru').attr('disabled', false);
                 });
             }

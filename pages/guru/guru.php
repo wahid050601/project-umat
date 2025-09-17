@@ -356,6 +356,13 @@
                 let setDataGuru = '';
                 let num = 1;
                 $.each(msg.dataguru, function(id,val){
+                    let setMapel = '';
+                    if(val.mapel_guru != ''){
+                        let mapelArray = val.mapel_guru.split(",").map(m => m.trim());
+                        mapelArray.forEach(mapel => {
+                            setMapel += `<div class="badge bg-primary">${mapel}</div><br>`;
+                        })
+                    }
                     setDataGuru += `
                     <tr>
                         <td data-id="${val.id_guru}">${num++}</td>
@@ -365,7 +372,7 @@
                         <td data-alamat="${val.alamat_guru}">${val.alamat_guru}</td>
                         <td data-tlp="${val.tlp_guru}">${val.tlp_guru}</td>
                         <td data-email="${val.email_guru}">${val.email_guru}</td>
-                        <td>${(val.mapel_guru == '' ? '-' : val.mapel_guru)}</td>
+                        <td>${(val.mapel_guru == '' ? '-' : setMapel)}</td>
                         <td data-jabatan="${val.jabatan}" class="text-center">${val.jabatan}</td>
                     </tr>`;
                 });
