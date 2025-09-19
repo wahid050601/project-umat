@@ -210,7 +210,9 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item"><a class="nav-link collapsed" href="index.php"><i class="bi bi-house-door-fill"></i><span>HOME</span></a></li>
 
-            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')"><i class="bi bi-person-fill"></i><span>PROFIL LEMBAGA</span></a></li>
+            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')"><i class="bi bi-buildings-fill"></i><span>PROFIL LEMBAGA</span></a></li>
+
+            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/user/user.php')"><i class="bi bi-people-fill"></i><span>KONFIGURASI USER</span></a></li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"><i class="bi bi-book-fill"></i><span>AKADEMIK</span><i class="bi bi-chevron-down ms-auto"></i></a>
@@ -225,9 +227,11 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                 </ul>
             </li>
 
-            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/administrasi/pengumuman.php')"><i class="bi bi-person-fill"></i><span>EKSTRAKURIKULER</span></a></li>
+            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/eskul/eskul.php')"><i class="bi bi-journal-bookmark-fill"></i><span>EKSTRAKURIKULER</span></a></li>
 
-            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/profile/profile.php')"><i class="bi bi-person"></i><span>DATA PRIBADI</span></a></li>
+            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/nilai/nilai.php')"><i class="bi bi-book"></i><span>NILAI</span></a></li>
+
+            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/profile/profile.php')"><i class="bi bi-person-fill"></i><span>DATA PRIBADI</span></a></li>
 
             <li class="nav-item"><a class="nav-link collapsed" href="logout.php"><i class="bi bi-power"></i><span>LOGOUT</span></a></li>
         </ul>

@@ -358,10 +358,15 @@
                 $.each(msg.dataguru, function(id,val){
                     let setMapel = '';
                     if(val.mapel_guru != ''){
-                        let mapelArray = val.mapel_guru.split(",").map(m => m.trim());
-                        mapelArray.forEach(mapel => {
-                            setMapel += `<div class="badge bg-primary">${mapel}</div><br>`;
-                        })
+                        let mapelArray;
+                        if(val.mapel_guru != null){
+                            mapelArray = val.mapel_guru.split(",").map(m => m.trim());
+                            mapelArray.forEach(mapel => {
+                                setMapel += `<div class="badge bg-primary">${mapel}</div><br>`;
+                            })
+                        }else{
+                            setMapel = '-';
+                        }
                     }
                     setDataGuru += `
                     <tr>

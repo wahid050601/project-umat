@@ -23,9 +23,9 @@
   </div>
   <div class="card-body mt-4">
     <div class="button-siswa">
-      <button type="button" class="btn btn-primary btn-sm" id="btnAddSiswa"><i class="bi bi-plus-circle"></i> Add</button>
-      <button type="button" class="btn btn-primary btn-sm disabled" id="btnEditSiswa"><i class="bi bi-pencil-square"></i> edit</button>
-      <button type="button" class="btn btn-primary btn-sm disabled" id="btnDeleteSiswa"><i class="bi bi-trash"></i> delete</button>
+      <button type="button" class="btn btn-primary btn-sm" id="btnAddSiswa"><i class="bi bi-plus-circle"></i></button>
+      <button type="button" class="btn btn-primary btn-sm disabled" id="btnEditSiswa"><i class="bi bi-pencil-square"></i></button>
+      <button type="button" class="btn btn-primary btn-sm disabled" id="btnDeleteSiswa"><i class="bi bi-trash"></i></button>
       <!-- <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-cloud-arrow-up-fill"></i> upload</button>
       <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> download</a> -->
     </div>
