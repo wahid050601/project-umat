@@ -184,16 +184,10 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
                             <h6>Rivansyah</h6>
-                            <span>Web Designer</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="profile.php"><i class="bi bi-person"></i><span>My Profile</span></a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="logout.php"><i class="bi bi-box-arrow-right"></i><span>Sign Out</span></a>
@@ -210,20 +204,21 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item"><a class="nav-link collapsed" href="index.php"><i class="bi bi-house-door-fill"></i><span>HOME</span></a></li>
 
-            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')"><i class="bi bi-buildings-fill"></i><span>PROFIL LEMBAGA</span></a></li>
+            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/kelembagaan/profil-lembaga.php')"><i class="bi bi-bank2"></i><span>PROFIL LEMBAGA</span></a></li>
 
             <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/user/user.php')"><i class="bi bi-people-fill"></i><span>KONFIGURASI USER</span></a></li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"><i class="bi bi-book-fill"></i><span>AKADEMIK</span><i class="bi bi-chevron-down ms-auto"></i></a>
+            <li class="nav-item"><a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"><i class="bi bi-book-fill"></i><span>AKADEMIK</span><i class="bi bi-chevron-down ms-auto"></i></a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li><a href="#" onclick="HtmlLoad('pages/pelajaran/pelajaran.php')"><i class="bi bi-circle"></i><span>JADWAL PELAJARAN</span></a></li>
+                    <li><a href="#" onclick="HtmlLoad('pages/akademik/akademik.php')"><i class="bi bi-circle"></i><span>MASTER AKADEMIK</span></a></li>
+                    
+                    <li><a href="#" onclick="HtmlLoad('pages/pelajaran/pelajaran.php')"><i class="bi bi-circle"></i><span>JADWAL PELAJARAN</span></a></li>
 
-                <li><a href="#" onclick="HtmlLoad('pages/rombel/rombel.php')"><i class="bi bi-circle"></i><span>ROMBONGAN BELAJAR</span></a></li>
+                    <li><a href="#" onclick="HtmlLoad('pages/rombel/rombel.php')"><i class="bi bi-circle"></i><span>ROMBONGAN BELAJAR</span></a></li>
 
-                <li><a href="#" onclick="HtmlLoad('pages/siswa/siswa.php')" ><i class="bi bi-circle"></i><span>DATA SISWA</span></a></li>
+                    <li><a href="#" onclick="HtmlLoad('pages/siswa/siswa.php')" ><i class="bi bi-circle"></i><span>DATA SISWA</span></a></li>
 
-                <li><a href="#" onclick="HtmlLoad('pages/guru/guru.php')" ><i class="bi bi-circle"></i><span>DATA GURU</span></a></li>
+                    <li><a href="#" onclick="HtmlLoad('pages/guru/guru.php')" ><i class="bi bi-circle"></i><span>DATA GURU</span></a></li>
                 </ul>
             </li>
 
@@ -231,7 +226,7 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
 
             <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/nilai/nilai.php')"><i class="bi bi-book"></i><span>NILAI</span></a></li>
 
-            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/profile/profile.php')"><i class="bi bi-person-fill"></i><span>DATA PRIBADI</span></a></li>
+            <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/profile/profile.php')"><i class="bi bi-person-fill"></i><span>PROFIL USER</span></a></li>
 
             <li class="nav-item"><a class="nav-link collapsed" href="logout.php"><i class="bi bi-power"></i><span>LOGOUT</span></a></li>
         </ul>
