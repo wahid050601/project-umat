@@ -65,16 +65,28 @@
                 break;
         
             case "getMapelAkademik" :
-                $query = "select id,mata_pelajaran,kelas from tb_mata_pelajaran";
+                $query = "
+                select a.id, a.mata_pelajaran, b.id as kelas_id, b.ket_rombel as kelas
+                from tb_mata_pelajaran a
+                left join tb_rombel b on a.kelas = cast(b.id as char)";
                 $execQuerymapel = mysqli_query($connect, $query);
                 $dataMapelAkademik = [];
                 while($row = mysqli_fetch_assoc($execQuerymapel)){
                     $dataMapelAkademik[] = $row;
                 }
 
+                // get list rombel
+                $queryRombel = "select id,ket_rombel from tb_rombel";
+                $execQueryRombel = mysqli_query($connect, $queryRombel);
+                $dataRombel = [];
+                while($row = mysqli_fetch_assoc($execQueryRombel)){
+                    $dataRombel[] = $row;
+                }
+
                 // Display data by Json
                 echo json_encode([
-                    "datamapelakademik" => $dataMapelAkademik
+                    "datamapelakademik" => $dataMapelAkademik,
+                    "datarombel" => $dataRombel
                 ]);
                 break;
 

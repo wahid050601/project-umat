@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group mt-2 mb-2">
                             <label>Kelas</label>
-                            <input type="text" class="form-control form-control-sm" id="kelas" placeholder="input...">
+                            <select class="form-control form-control-sm" id="kelas"></select>
                         </div>
                         <button type="button" class="btn btn-primary btn-sm" id="savemapel"><i class="bi bi-check-circle"></i> Simpan</button>
                     </div>
@@ -127,6 +127,15 @@ function loadEkskul(){
     })
 }
 function addEkskul(ekskul,pelatih){
+    if(ekskul == '' || pelatih == ''){
+        Swal.fire({
+            title: 'Error',
+            text: 'Ekskul dan nama pelatih harus di isi !',
+            icon: 'error'
+        });
+        return false;
+    }
+
     $.ajax({
         url: 'pages/eskul/eskul-action.php',
         method: 'post',
@@ -217,11 +226,26 @@ function loadMapelAkademik(){
                 scrollX: true,
             });
             
+            // set list kelas
+            let listKelas = '<option value="">_pilih_</option>';
+            $.each(eks.datarombel, function(id,val){
+                listKelas += `<option value="${val.id}">${val.ket_rombel}</option>`;
+            });
+            $('#kelas').html(listKelas);
         }
 
     })
 }
 function addMapel(mapel,kelas){
+    if(mapel == '' || kelas == ''){
+        Swal.fire({
+            title: 'Error',
+            text: 'Mata pelajaran dan kelas harus di isi !',
+            icon: 'error'
+        });
+        return false;
+    }
+
     $.ajax({
         url: 'pages/pelajaran/pelajaran-func-data.php',
         method: 'post',

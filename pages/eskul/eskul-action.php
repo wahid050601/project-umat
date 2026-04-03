@@ -85,6 +85,31 @@ if(isset($_POST["action"])){
             }
         break;
 
+        case "loadDataSiswa":
+            try {
+                $idrombel = $_POST["idrombel"];
+                $getSiswa = "select s.id_siswa, s.nama_siswa, s.nis_siswa, r.id as id_rombel, r.ket_rombel from tb_rombel_set rs join tb_siswa s on rs.id_siswa = s.id_siswa join tb_rombel r on rs.id_rombel = r.id where rs.id_rombel = $idrombel order by s.nama_siswa asc";
+                $exec = $connect->query($getSiswa);
+                $listsiswa = [];
+                while($row = $exec->fetch_assoc()){
+                    $listsiswa[] = $row;
+                }
+
+                echo json_encode([
+                    "status" => "success",
+                    "info" => "berhasil ambil data siswa",
+                    "listsiswa" => $listsiswa
+                ]);
+
+            } catch (\Throwable $th) {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Error : ". $th->getMessage(),
+                    "listsiswa" => []
+                ]);
+            }
+        break;
+
         case "addekskul":
             $ekskul = $_POST["ekskul"];
             $pelatih = $_POST["pelatih"];
