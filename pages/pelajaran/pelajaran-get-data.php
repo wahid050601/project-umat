@@ -63,6 +63,24 @@
                     "datagurumapel" => $dataGurumapel
                 ]);
                 break;
+        
+            case "getMapelAkademik" :
+                $query = "select id,mata_pelajaran,kelas from tb_mata_pelajaran";
+                $execQuerymapel = mysqli_query($connect, $query);
+                $dataMapelAkademik = [];
+                while($row = mysqli_fetch_assoc($execQuerymapel)){
+                    $dataMapelAkademik[] = $row;
+                }
+
+                // Display data by Json
+                echo json_encode([
+                    "datamapelakademik" => $dataMapelAkademik
+                ]);
+                break;
+
+
+
+
         }
     }
 

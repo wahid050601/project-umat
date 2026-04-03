@@ -15,14 +15,27 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>No.</th>
-                                    <th>Ekskul</th>
-                                    <th>Pelatih</th>
+                                    <th>Mata Pelajaran</th>
+                                    <th>Kelas</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="set-table-mapel">
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-lg-6">
+                        <span style="font-weight: 700;">Form Mata Pelajaran</span>
+                        <hr>
+                        <div class="form-group mt-2 mb-2">
+                            <label>Mata Pelajaran</label>
+                            <input type="text" class="form-control form-control-sm" id="mapel" placeholder="input...">
+                        </div>
+                        <div class="form-group mt-2 mb-2">
+                            <label>Kelas</label>
+                            <input type="text" class="form-control form-control-sm" id="kelas" placeholder="input...">
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm" id="savemapel"><i class="bi bi-check-circle"></i> Simpan</button>
                     </div>
                 </div>
             </li>
@@ -167,5 +180,103 @@ function delEkskul(idkeskul){
         }
     });
 }
+
+// ============================================== END EKSKUL ==============================================
+
+// ============================================== MATA PELAJARAN ==============================================
+// Load Mata Pelajaran Akademik
+loadMapelAkademik();
+
+// Add Mata Pelajaran Akademik
+$('#savemapel').on('click', function(){
+    addMapel($('#mapel').val(), $('#kelas').val());
+});
+
+function loadMapelAkademik(){
+    $.ajax({
+        url: 'pages/pelajaran/pelajaran-get-data.php',
+        method: 'post',
+        dataType: 'json',
+        data: {action: 'getMapelAkademik'},
+        success: function(eks){
+            $(".table-mapel").DataTable().destroy();
+
+            let settable = '';
+            let nums = 1;
+            $.each(eks.datamapelakademik, function(id,val){
+                settable += `
+                <tr>
+                    <td class="text-center">${nums++}</td>
+                    <td>${val.mata_pelajaran}</td>
+                    <td>${val.kelas}</td>
+                    <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm" onclick="delMapelAkademik('${val.id}')"><i class="bi bi-trash"></i></button></td></td>
+                </tr>`;
+            });
+            $('.set-table-mapel').html(settable);
+            $(".table-mapel").DataTable({
+                scrollX: true,
+            });
+            
+        }
+
+    })
+}
+function addMapel(mapel,kelas){
+    $.ajax({
+        url: 'pages/pelajaran/pelajaran-func-data.php',
+        method: 'post',
+        dataType: 'json',
+        data: {
+            action: 'addMapelAkademik',
+            mapel: mapel,
+            kelas: kelas
+        },
+        success: function(msg){
+            loadMapelAkademik();
+            $('#mapel').val('');
+            $('#kelas').val('');
+
+            Swal.fire({
+                title: msg.status,
+                text: msg.info,
+                icon: msg.status
+            });
+        }
+    });
+}
+function delMapelAkademik(idmapel){
+    Swal.fire({
+        title: 'Hapus Data Mata Pelajaran',
+        text: 'Ingin hapus data mata pelajaran ?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: "Hapus",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if(result.isConfirmed){
+            $.ajax({
+                url: 'pages/pelajaran/pelajaran-func-data.php',
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    action: 'deleteMapelAkademik',
+                    idmapel: idmapel
+                },
+                success: function(msg){
+                    loadMapelAkademik();
+
+                    Swal.fire({
+                        title: msg.status,
+                        text: msg.info,
+                        icon: msg.status
+                    });
+                }
+            });
+        }
+    });
+}
+
+
+
 
 </script>
