@@ -45,25 +45,22 @@ if(isset($_POST["action"])){
                 $idrombel = $_POST["idrombel"];
 
                 $getNilaiEkskul = "
-                SELECT
-                    e.id as id_ekskul,
-                    r.id as id_rombel,
-                    s.id_siswa,
-                    s.nama_siswa,
-                    s.nis_siswa,
-                    s.jk_siswa,
-                    ne.nilai
-                FROM tb_rombel_set rs
-                JOIN tb_rombel r 
-                    ON rs.id_rombel = r.id
-                JOIN tb_siswa s 
-                    ON rs.id_siswa = s.id_siswa
-                CROSS JOIN tb_ekskul e
-                LEFT JOIN tb_ekskul_nilai ne 
-                    ON ne.id_siswa = s.id_siswa
-                    AND ne.id_ekskul = e.id
-                WHERE r.id = $idrombel
-                AND e.id = $idekskul";
+                select a.id as id_nilai,
+                a.id_ekskul,
+                b.ekskul,
+                a.id_kelas,
+                c.ket_rombel,
+                a.id_siswa,
+                d.nis_siswa,
+                d.nama_siswa,
+                d.jk_siswa,
+                a.nilai 
+                from tb_ekskul_nilai a
+                left join tb_ekskul b on a.id_ekskul = b.id
+                left join tb_rombel c on a.id_kelas = c.id
+                left join tb_siswa d on a.id_siswa = d.id_siswa
+                where b.id = $idekskul -- ID EKSKUL
+                and c.id = $idrombel; -- ID ROMBEL";
                 $exec = $connect->query($getNilaiEkskul);
                 $listdatanilai = [];
                 while($row = $exec->fetch_assoc()){
@@ -88,7 +85,15 @@ if(isset($_POST["action"])){
         case "loadDataSiswa":
             try {
                 $idrombel = $_POST["idrombel"];
-                $getSiswa = "select s.id_siswa, s.nama_siswa, s.nis_siswa, r.id as id_rombel, r.ket_rombel from tb_rombel_set rs join tb_siswa s on rs.id_siswa = s.id_siswa join tb_rombel r on rs.id_rombel = r.id where rs.id_rombel = $idrombel order by s.nama_siswa asc";
+                $idekskul = $_POST["idekskul"];
+                $getSiswa = "
+                select s.id_siswa, s.nama_siswa, s.nis_siswa, r.id as id_rombel, r.ket_rombel 
+                from tb_rombel_set rs 
+                join tb_siswa s on rs.id_siswa = s.id_siswa 
+                join tb_rombel r on rs.id_rombel = r.id 
+                where rs.id_rombel = $idrombel 
+                and s.id_siswa not in (select id_siswa from tb_ekskul_nilai where id_ekskul = $idekskul)
+                order by s.nama_siswa asc";
                 $exec = $connect->query($getSiswa);
                 $listsiswa = [];
                 while($row = $exec->fetch_assoc()){
@@ -168,6 +173,71 @@ if(isset($_POST["action"])){
                 ]);
             }
 
+        break;
+
+        case "addsiswaekskul":
+            try {
+                $idrombel = $_POST["idrombel"];
+                $id_siswa = $_POST["id_siswa"];
+                $id_ekskul = $_POST["id_ekskul"];
+
+                // input nilai ekskul dengan nilai default 0
+                $insNilaiEkskul = "insert into tb_ekskul_nilai (id_ekskul, id_kelas, id_siswa) values ($id_ekskul, $idrombel, $id_siswa)";
+                error_log($insNilaiEkskul);
+                $exec = $connect->query($insNilaiEkskul);
+
+                if(!$exec){
+                    echo json_encode([
+                        "status" => "error",
+                        "info" => "Gagal Tambah Siswa Ekskul"
+                    ]);
+                    return;
+                }
+
+                echo json_encode([
+                    "status" => "success",
+                    "info" => "Siswa Berhasil di Tambah ke Ekskul"
+                ]);
+
+            } catch (\Throwable $th) {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Error: ". $th->getMessage()
+                ]);
+            }
+        break;
+        // proses input nilai ekskul
+        case "inputnilaiekskul":
+            try {
+                $idekskul = $_POST["idekskul"];
+                $idrombel = $_POST["idrombel"];
+                $idsiswa = $_POST["idsiswa"];
+                $nilai = $_POST["nilai"];
+
+                // update nilai ekskul
+                $updateNilai = "update tb_ekskul_nilai set nilai = $nilai where id_ekskul = $idekskul and id_kelas = $idrombel and id_siswa = $idsiswa";
+                error_log($updateNilai);
+                $exec = $connect->query($updateNilai);
+
+                if(!$exec){
+                    echo json_encode([
+                        "status" => "error",
+                        "info" => "Gagal Input Nilai Ekskul"
+                    ]);
+                    return;
+                }
+
+                echo json_encode([
+                    "status" => "success",
+                    "info" => "Nilai Ekskul Berhasil di Input"
+                ]);
+
+            } catch (\Throwable $th) {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Error: ". $th->getMessage()
+                ]);
+            }
         break;
 
     }

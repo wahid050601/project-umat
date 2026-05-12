@@ -60,8 +60,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="save-add-siswa-ekskul">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary" id="save-add-siswa-ekskul">Simpan</button>
       </div>
     </div>
   </div>
@@ -89,8 +89,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="save-config-nilai-ekskul">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary" id="save-config-nilai-ekskul">Simpan</button>
       </div>
     </div>
   </div>
@@ -103,6 +103,23 @@
 
     // Load data eskul
     loaddataeskulrombel();
+
+    // Disabled button add siswa ekskul and input nilai ekskul
+    $('#kelas').on('change', function(){
+        $('#eskul').val('');
+        $('.table-set-ekskul').html(`
+            <div class="alert alert-warning" role="alert">
+                Pilih kelas dan ekskul!
+            </div>
+        `);
+    });
+    $('#eskul').on('change', function(){
+        $('.table-set-ekskul').html(`
+            <div class="alert alert-warning" role="alert">
+                Pilih kelas dan ekskul!
+            </div>
+        `);
+    });
 
     // Load nilai ekskul
     $('#find-nilai-ekskul').on('click', function(){
@@ -153,7 +170,7 @@
                     let nums = 1;
                     let tableset = `
                     <div class="mb-2">
-                        <button type="button" class="btn btn-primary btn-sm" onclick="addSiswaEkskul('${idrombel}')">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="getSiswaEkskul('${idrombel}', '${idekskul}')">
                             <i class="bi bi-plus-circle"></i> Tambah Siswa
                         </button>
                     </div>
@@ -191,7 +208,7 @@
                             <td>${val.nilai == null ? 0 : val.nilai}</td>
                             <td>${predikat}</td>
                             <td class="text-center">
-                                <button class="btn btn-primary btn-sm config-nilai-ekskul" onclick="configNilaiEkskul('${val.id_ekskul}', '${val.id_rombel}', '${val.id_siswa}')"><i class="bi bi-pencil-square"></i> Config</button>
+                                <button class="btn btn-primary btn-sm config-nilai-ekskul" title="Input Nilai" onclick="configNilaiEkskul('${val.id_ekskul}', '${val.id_kelas}', '${val.id_siswa}')"><i class="bi bi-pencil-square"></i></button>
                             </td>
                         </tr>`;
                     });
@@ -206,13 +223,14 @@
         });
     }
 
-    function addSiswaEkskul(idrombel){
+    function getSiswaEkskul(idrombel, idekskul){
         $.ajax({
             method: 'post',
             url: 'pages/eskul/eskul-action.php',
             dataType: 'json',
             data: {
                 action: 'loadDataSiswa',
+                idekskul: idekskul,
                 idrombel: idrombel
             },
             success: function(dts){
@@ -223,6 +241,38 @@
                     });
                     $('#data_siswa').html(listSiswa);
                     $('#addSiswaEkskulModal').modal('show');
+
+                    $('#save-add-siswa-ekskul').off('click').on('click', function(){
+                        let id_ekskul = $('#eskul').val();
+                        let id_siswa = $('#data_siswa').val();
+                        if(id_siswa == ''){
+                            alert('Pilih siswa!');
+                        }else{
+                            addSiswaEkskul(idrombel, id_siswa, id_ekskul);
+                        }
+                    });
+                }
+            }
+        })
+    }
+    function addSiswaEkskul(idrombel, id_siswa, id_ekskul){
+        $.ajax({
+            method: 'post',
+            url: 'pages/eskul/eskul-action.php',
+            dataType: 'json',
+            data: {
+                action: 'addsiswaekskul',
+                idrombel: idrombel,
+                id_siswa: id_siswa,
+                id_ekskul: id_ekskul
+            },
+            success: function(res){
+                if(res.status == 'success'){
+                    $('#addSiswaEkskulModal').modal('hide');
+                    $('#find-nilai-ekskul').click();
+                    alert(res.info);
+                }else{
+                    alert(res.info);
                 }
             }
         })
@@ -234,6 +284,48 @@
         $('#id_rombel_config').val(idrombel);
         $('#id_siswa_config').val(idsiswa);
         $('#configNilaiEkskulModal').modal('show');
+
+        // validate nilai ekskul
+        $('#nilai_ekskul').on('input', function(){
+            let nilai = $(this).val();
+            if(nilai < 0){
+                alert('Nilai tidak boleh kurang dari 0');
+                $(this).val(0);
+            }
+
+            if(nilai > 100){
+                alert('Nilai tidak boleh lebih dari 100');
+                $(this).val(null);
+            }
+        });
+
+        // save config nilai ekskul and reload button submit
+        $('#save-config-nilai-ekskul').off('click').on('click', function(){
+            let id_ekskul = $('#id_ekskul_config').val();
+            let id_rombel = $('#id_rombel_config').val();
+            let id_siswa = $('#id_siswa_config').val();
+            let nilai_ekskul = $('#nilai_ekskul').val();
+            $.ajax({
+                method: 'post',
+                url: 'pages/eskul/eskul-action.php',
+                dataType: 'json',
+                data: {
+                    action: 'inputnilaiekskul',
+                    idekskul: id_ekskul,
+                    idrombel: id_rombel,
+                    idsiswa: id_siswa,
+                    nilai: nilai_ekskul
+                },
+                success: function(res){
+                    if(res.status == 'success'){
+                        $('#configNilaiEkskulModal').modal('hide');
+                        $('#find-nilai-ekskul').click();
+                    }else{
+                        alert(res.info);
+                    }
+                }
+            });
+        });
     }
     
 </script>

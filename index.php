@@ -219,6 +219,8 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                     <li><a href="#" onclick="HtmlLoad('pages/siswa/siswa.php')" ><i class="bi bi-circle"></i><span>DATA SISWA</span></a></li>
 
                     <li><a href="#" onclick="HtmlLoad('pages/guru/guru.php')" ><i class="bi bi-circle"></i><span>DATA GURU</span></a></li>
+                    
+                    <li><a href="#" onclick="HtmlLoad('pages/report/report.php')" ><i class="bi bi-circle"></i><span>REPORTING</span></a></li>
                 </ul>
             </li>
 
