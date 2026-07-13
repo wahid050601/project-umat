@@ -1,0 +1,319 @@
+<style>
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-size: 25px;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <i class="bi bi-journal-text"></i>&nbsp; Jadwal Pelajaran
+    </div>
+    <div class="card-body mt-4">
+        <!-- HEADER TAB JADWAL -->
+        <span style="color: red; font-style: italic; font-size: 11px;">*) Pilih salah satu jadwal</span>
+        <hr>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button data-namahari="Senin" class="nav-link jadwalmapel" id="senin-tab" data-bs-toggle="tab" data-bs-target="#page_jadwal" type="button" type="button" role="tab" aria-controls="page_jadwal" aria-selected="true">senin</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-namahari="Selasa" class="nav-link jadwalmapel" id="selasa-tab" data-bs-toggle="tab" data-bs-target="#page_jadwal" type="button" type="button" role="tab" aria-controls="page_jadwal" aria-selected="true">selasa</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-namahari="Rabu" class="nav-link jadwalmapel" id="rabu-tab" data-bs-toggle="tab" data-bs-target="#page_jadwal" type="button" type="button" role="tab" aria-controls="page_jadwal" aria-selected="true">rabu</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-namahari="Kamis" class="nav-link jadwalmapel" id="kamis-tab" data-bs-toggle="tab" data-bs-target="#page_jadwal" type="button" type="button" role="tab" aria-controls="page_jadwal" aria-selected="true">kamis</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-namahari="Jumat" class="nav-link jadwalmapel" id="jumat-tab" data-bs-toggle="tab" data-bs-target="#page_jadwal" type="button" type="button" role="tab" aria-controls="page_jadwal" aria-selected="true">jumat</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-namahari="Sabtu" class="nav-link jadwalmapel" id="sabtu-tab" data-bs-toggle="tab" data-bs-target="#page_jadwal" type="button" type="button" role="tab" aria-controls="page_jadwal" aria-selected="true">sabtu</button>
+            </li>
+        </ul>
+
+        <!-- BODY TAB JADWAL -->
+        <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade" id="page_jadwal" role="tabpanel">
+                <div class="form-select-kelas mb-3 mt-3" style="width: 40%;">
+                    <select id="select-kelas" class="form-select form-select-sm"></select>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="head-jadwal">Jadwal Hari <span class="day-jadwal"></span></div>
+                        <hr>
+                        <div class="button-action">
+                            <button class="btn btn-primary btn-sm" id="addJadwalBtn"><i class="bi bi-plus"></i></button>
+                            <button class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></button>
+                        </div>
+                        <!-- Loading -->
+                        <!-- <div class="loading"><i class="bi bi-cloud-arrow-down"></i>&nbsp; Loading ...</div> -->
+                        <div class="table-jadwal">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Add Data -->
+<div class="modal fade" id="AddJadwalModal" tabindex="-1" aria-labelledby="AddJadwalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddJadwalModalLabel">Tambah Jadwal Pelajaran</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="header-form text-center">Jadwal Hari <span class="dayname"></span></div>
+                <form action="" method="post" class="mt-3" id="form-add-jadwal">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-3">
+                                <select name="" id="" class="form-control form-control-sm sel-jam">
+                                    <option value="">_ jam ke _</option>
+                                    <script>
+                                        $(document).ready(function(){
+                                            let selectopt = '';
+                                            for(let i=1; i <= 10; i++){
+                                                selectopt += ' <option value="'+i+'">'+i+'</option>';
+                                            }
+                                            $('.sel-jam').append(selectopt);
+                                        });
+                                    </script>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" name="" id="waktuMulai" placeholder="00.00" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-1 text-center">
+                                <span class="h4"> - </span>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" name="" id="waktuSelesai" placeholder="00.00" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <select name="" id="" class="form-control form-control-sm formSelectMapel">
+                            <option value="">_pilih mapel_</option>
+                            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                            <option value="Matematika">Matematika</option>
+                            <option value="Ilmu Pengetahuan Alam (IPA)">Ilmu Pengetahuan Alam (IPA)</option>
+                            <option value="Ilmu Pengetahuan Sosial (IPS)">Ilmu Pengetahuan Sosial (IPS)</option>
+                            <option value="Pendidikan Pancasila & Kewarganegaraan (PPKn)">Pendidikan Pancasila & Kewarganegaraan (PPKn)</option>
+                            <option value="Pendidikan Agama">Pendidikan Agama</option>
+                            <option value="Seni Budaya & Keterampilan (SBK)">Seni Budaya & Keterampilan (SBK)</option>
+                            <option value="endidikan Jasmani, Olahraga & Kesehatan (PJOK)">Pendidikan Jasmani, Olahraga & Kesehatan (PJOK)</option>
+                            <option value="Bahasa Inggris">Bahasa Inggris</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <select name="" id="" class="form-control form-control-sm formSelectGuru">
+                            <!-- Select Here -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi bi-x"></i> Batal</button>
+                <button type="button" class="btn btn-primary btn-sm" id="saveDataJadwal"><i class="bi bi-download"></i> Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.jadwalmapel').on('click', function(){
+        $('.table-jadwal').hide();
+        $('.loading').show();
+
+        // Changes Header Jadwal
+        var namahari = $(this).data('namahari');
+        $('.day-jadwal').html(namahari);
+
+        // Get Data Kelas
+        $.ajax({
+            method: "post",
+            url: "pages/pelajaran/pelajaran-get-data.php",
+            dataType: "json",
+            data: {
+                "action" : "getDataMapel",
+                "getkelas" : "true"
+            },
+            success: function(datakelas){
+                // console.log(datakelas);
+                let showkelas = '<option value="">__pilih kelas__</option>';
+                $.each(datakelas.datakelas, function(id,val){
+                    showkelas += '<option value="'+val.id+'">KELAS '+val.ket_rombel+'</option>';
+                });
+                $('#select-kelas').html(showkelas);
+            }
+        });
+        
+        // Get Data Mapel
+        getDataMapel(namahari);
+    });
+
+    $('#addJadwalBtn').on('click', function(){
+        $('.sel-jam').val('');
+        $('#waktuMulai').val('');
+        $('#waktuSelesai').val('');
+        $('.formSelectGuru').empty();
+        $('.formSelectGuru').append('<option>_pilih guru_</option>');
+        $('.formSelectGuru').attr('disabled', true);
+
+        let datahari = $('.day-jadwal').text();
+        $('.dayname').html(datahari);
+        console.log(datahari)
+        $.ajax({
+            method: "POST",
+            url: "pages/pelajaran/pelajaran-get-data.php",
+            dataType: "json",
+            data: {"action" : "getDataGuruMapel"},
+            success: function(msg){
+                let datamapel = '<option>__Pilih Pelajaran__</option>';
+                $.each(msg.datagurumapel, function(index, value){
+                    datamapel += '<option value="'+value.mapel_guru+'">'+value.mapel_guru+'</option>';
+                });
+                // $('.formSelectMapel').empty();
+                // $('.formSelectMapel').append(datamapel);
+
+                $('.formSelectMapel').on('change', function(){
+                    let dataguru = '<option>_pilih guru_</option>';
+                    $.each(msg.datagurumapel, function(index, value){
+                        dataguru += '<option value="'+value.id_guru+'">'+value.nama_guru+'</option>';
+                    });
+                    $('.formSelectGuru').empty();
+                    $('.formSelectGuru').html(dataguru);
+                    $('.formSelectGuru').attr('disabled', false);
+                });
+            }
+        });
+        $('#AddJadwalModal').modal('show');
+    });
+
+    $('#saveDataJadwal').on('click', function(){
+        if($('.sel-jam').val()=='' || $('#waktuMulai').val()=='' || $('#waktuSelesai').val()=='' || $('.formSelectMapel').val()=='' || $('.formSelectGuru').val()==''){
+            Swal.fire({
+                title: "warning",
+                icon: "warning",
+                text: "Harap lengkapi data isian",
+            });
+        }else{
+            $.ajax({
+                method: "POST",
+                url: "pages/pelajaran/pelajaran-func-data.php",
+                dataType: "json",
+                data: {
+                    "action" : "addJadwalMapel",
+                    "triger" : "true",
+                    "hari" : $('.dayname').text(),
+                    "jamke" : $('.sel-jam').val(),
+                    "waktumulai" : $('#waktuMulai').val(),
+                    "waktuselesai" : $('#waktuSelesai').val(),
+                    "mapel" : $('.formSelectMapel').val(),
+                    "guru" : $('.formSelectGuru').val()
+                },
+                beforeSend: function(data){
+                    $('#form-add-jadwal')[0].reset();
+                    $('#AddJadwalModal').modal('hide');
+                },
+                success: function(msg){
+                    let namahari = $('.day-jadwal').text();
+                    if(msg.note == 'notadd'){
+                        Swal.fire({
+                            title: 'warning',
+                            text: msg.text,
+                            icon:  'warning'
+                        });
+                    }else{
+                        if(msg.status == 'success'){
+                            Swal.fire({
+                                title: msg.status,
+                                text: 'data berhasil ditambah',
+                                icon:  msg.status
+                            }).then((ok)=>{
+                                getDataMapel(namahari);
+                            });
+                        }else{
+                            Swal.fire({
+                                title: msg.status,
+                                text: 'data gagal ditambah',
+                                icon:  msg.status
+                            }).then((ok)=>{
+                                getDataMapel(namahari);
+                            });
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+
+    //  FUNCTION ==========================================================================
+    function getDataMapel(namahari){
+        $.ajax({
+            method: "POST",
+            url: "pages/pelajaran/pelajaran-get-data.php",
+            dataType: "json",
+            data: {
+                "action" : "getDataMapel",
+                "datahari" : namahari
+            },
+            success: function(msg){
+                if(msg.datamapel != ''){
+                    let rowspan = msg.datamapel.length + 1;
+                    let showmapel = `
+                    <table class="table table-bordered border-primary mt-3">
+                        <tr class="bg-primary text-white text-center"><th colspan="5">Jadwal Pelajaran Hari `+msg.datamapel[0]["hari"]+`</th></tr>
+                        <tr class="text-center"><td rowspan="`+rowspan+`" width="7%">`+msg.datamapel[0]["hari"]+`</td></tr>`;
+                    $.each(msg.datamapel, function(idx, value){
+                        showmapel += `
+                        <tr>
+                            <td class="text-center" width="10%">Jam ke-`+value.jam_ke+`</td>
+                            <td class="text-center" width="15%">`+value.waktu_mulai+` - `+value.waktu_selesai+`</td>
+                            <td width="30%">`+value.mapel+`</td>
+                            <td>`+value.guru_mapel+`</td>
+                        </tr>`;
+                    });
+                    showmapel += `</table>`;
+                    $('.table-jadwal').empty();
+                    $('.table-jadwal').append(showmapel);
+                    $('.table-jadwal').show();
+                    // $('.table-jadwal').DataTable();
+                    $('.loading').hide();
+                }else{
+                    // Swal.fire({
+                    //     title: "warning",
+                    //     icon: "warning",
+                    //     text: "tidak ada jadwal pelajaran, harap tambah terlebih dahulu",
+                    // });
+
+                    $('.table-jadwal').empty();
+                    $('.table-jadwal').append('<div style="font-style: italic; color: red;" class="text-center">Jadwal hari '+namahari+' kosong, harap tambah data pelajaran</div>');
+                    $('.table-jadwal').show();
+                    $('.loading').hide();
+                }
+            }
+        });
+    }
+</script>

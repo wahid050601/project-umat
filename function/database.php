@@ -12,9 +12,13 @@ $charset = 'utf8mb4';
 // DB_DATABASE1: fa_addawah
 // DB_DATABASE2: sia_yaj
 
+/**
+ * @var mysqli $connect MySQLi connection instance created by mysqli_connect().
+ */
 $connect = mysqli_connect($host, $user, $pass, $database);
 
 if (!$connect) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
 }
 ?>

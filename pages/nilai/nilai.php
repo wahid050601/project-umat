@@ -229,7 +229,7 @@
                                 <td class="text-center">${!nilaiRaportCountAverage ? '-' : nilaiRaportCountAverage.toFixed(2)}</td>
                                 <td class="text-center">${predikat}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-primary" onclick="inputNilai('${val.id_nilai}')">
+                                    <button class="btn btn-sm btn-primary" onclick="inputNilai('${val.id_nilai}', '${val.nilai_harian}', '${val.nilai_smts}')">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </td>
@@ -265,10 +265,14 @@
         });
     }
 
-    function inputNilai(idnilai){
+    function inputNilai(idnilai, nilaiHarian = null, nilaiSmts = null){
         let buttonSubmit = '<button type="button" class="btn btn-primary" id="save-config-nilai-mapel">Simpan</button>';
         $('.button-submit-nilai').html(buttonSubmit);
         $('#configNilaiMapelModal').modal('show');
+
+        // set default nilai harian if exists
+        $('#nilai_harian').val(nilaiHarian ?? '');
+        $('#nilai_semester').val(nilaiSmts ?? '');
 
         // validasi value nilai harian dan nilai semester
         $('#nilai_harian, #nilai_semester').on('input', function(){

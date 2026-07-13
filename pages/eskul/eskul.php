@@ -79,9 +79,6 @@
       </div>
       <div class="modal-body">
         <form id="form-config-nilai-ekskul">
-            <input type="hidden" id="id_ekskul_config" name="id_ekskul_config">
-            <input type="hidden" id="id_rombel_config" name="id_rombel_config">
-            <input type="hidden" id="id_siswa_config" name="id_siswa_config">
             <div class="mb-3">
                 <label for="nilai_ekskul" class="form-label">Nilai Ekstrakurikuler</label>
                 <input type="number" class="form-control" id="nilai_ekskul" name="nilai_ekskul" min="0" max="100">
@@ -208,7 +205,7 @@
                             <td>${val.nilai == null ? 0 : val.nilai}</td>
                             <td>${predikat}</td>
                             <td class="text-center">
-                                <button class="btn btn-primary btn-sm config-nilai-ekskul" title="Input Nilai" onclick="configNilaiEkskul('${val.id_ekskul}', '${val.id_kelas}', '${val.id_siswa}')"><i class="bi bi-pencil-square"></i></button>
+                                <button class="btn btn-primary btn-sm config-nilai-ekskul" title="Input Nilai" onclick="configNilaiEkskul('${val.id_nilai}', '${val.nilai}')"><i class="bi bi-pencil-square"></i></button>
                             </td>
                         </tr>`;
                     });
@@ -278,11 +275,8 @@
         })
     }
 
-    function configNilaiEkskul(idekskul, idrombel, idsiswa){
-        
-        $('#id_ekskul_config').val(idekskul);
-        $('#id_rombel_config').val(idrombel);
-        $('#id_siswa_config').val(idsiswa);
+    function configNilaiEkskul(idnilai, nilai){
+        $('#nilai_ekskul').val(nilai);
         $('#configNilaiEkskulModal').modal('show');
 
         // validate nilai ekskul
@@ -301,9 +295,6 @@
 
         // save config nilai ekskul and reload button submit
         $('#save-config-nilai-ekskul').off('click').on('click', function(){
-            let id_ekskul = $('#id_ekskul_config').val();
-            let id_rombel = $('#id_rombel_config').val();
-            let id_siswa = $('#id_siswa_config').val();
             let nilai_ekskul = $('#nilai_ekskul').val();
             $.ajax({
                 method: 'post',
@@ -311,9 +302,7 @@
                 dataType: 'json',
                 data: {
                     action: 'inputnilaiekskul',
-                    idekskul: id_ekskul,
-                    idrombel: id_rombel,
-                    idsiswa: id_siswa,
+                    idnilai: idnilai,
                     nilai: nilai_ekskul
                 },
                 success: function(res){

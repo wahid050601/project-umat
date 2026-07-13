@@ -1,5 +1,5 @@
 <?php
-require "../../function/database.php";
+require_once __DIR__ . "/../../function/database.php";
 
 if(isset($_POST["action"])){
     $action = $_POST["action"];
@@ -209,13 +209,11 @@ if(isset($_POST["action"])){
         // proses input nilai ekskul
         case "inputnilaiekskul":
             try {
-                $idekskul = $_POST["idekskul"];
-                $idrombel = $_POST["idrombel"];
-                $idsiswa = $_POST["idsiswa"];
+                $idnilai = $_POST["idnilai"];
                 $nilai = $_POST["nilai"];
 
                 // update nilai ekskul
-                $updateNilai = "update tb_ekskul_nilai set nilai = $nilai where id_ekskul = $idekskul and id_kelas = $idrombel and id_siswa = $idsiswa";
+                $updateNilai = "update tb_ekskul_nilai set nilai = $nilai where id = $idnilai";
                 error_log($updateNilai);
                 $exec = $connect->query($updateNilai);
 
