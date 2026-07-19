@@ -70,6 +70,21 @@
 <script>
     loadProfileData();
 
+    function syncHeaderProfile(name, imageName) {
+        const headerName = $('.nav-profile .dropdown-toggle.ps-2');
+        if (headerName.length) {
+            headerName.text(name || 'User');
+        }
+
+        const headerAvatar = $('.nav-profile img');
+        if (headerAvatar.length) {
+            const imageSrc = imageName ? 'assets/img/profile/' + imageName : 'assets/img/logo_yaj.jpg';
+            headerAvatar.attr('src', imageSrc + '?v=' + new Date().getTime()).one('error', function () {
+                $(this).attr('src', 'assets/img/logo_yaj.jpg');
+            });
+        }
+    }
+
     $('#updt-profil').on('click', function () {
         let formData = new FormData();
         formData.append('action', 'updateprofile');
@@ -138,10 +153,11 @@
                     $('#email-cnf').val(msg.data.email);
                     $('#profile-name-title').text(msg.data.nama.toUpperCase());
                     $('#profile-level-title').text(msg.data.level || 'User');
+                    syncHeaderProfile(msg.data.nama, msg.data.image);
 
                     if (msg.data.image && msg.data.image !== '') {
                         let imageSrc = 'assets/img/profile/' + msg.data.image;
-                        $('#profile-image-preview').attr('src', imageSrc).one('error', function () {
+                        $('#profile-image-preview').attr('src', imageSrc + '?v=' + new Date().getTime()).one('error', function () {
                             $(this).attr('src', 'assets/img/logo_yaj.jpg');
                         });
                     } else {
