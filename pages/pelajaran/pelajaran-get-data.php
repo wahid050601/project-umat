@@ -97,7 +97,12 @@ if(isset($action)){
             $idkelas = $_POST["idkelas"];
             $query = "
             select
-            jadwal.hari,
+            jadwal.id_jadwal,
+            LOWER(jadwal.hari) as hari,
+            jadwal.id_kelas,
+            jadwal.id_mapel,
+            jadwal.id_waktu,
+            jadwal.id_guru,
             kelas.ket_rombel,
             mapel.mata_pelajaran,
             waktu.label as jam,
@@ -114,19 +119,22 @@ if(isset($action)){
 
             try {
                 $exec = $connect->query($query);
-                $dataJadwal = [];
+                $rows = [];
+                while ($row = $exec->fetch_assoc()) {
+                    $rows[] = $row;
+                }
 
+                $dataJadwal = [];
                 $hari = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
                 foreach ($hari as $h) {
                     $dataJadwal[$h] = [];
-                    while ($row = $exec->fetch_assoc()) {
+                    foreach ($rows as $row) {
                         if ($row['hari'] === $h) {
                             $dataJadwal[$h][] = $row;
                         }
                     }
                 }
-                
-                
+
                 echo json_encode([
                     "status" => "success",
                     "info" => "Data Jadwal Berhasil di Load",

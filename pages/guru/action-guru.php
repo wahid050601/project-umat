@@ -12,15 +12,16 @@ if(isset($_POST["action"])){
                 select a.id_guru,
                 a.no_guru,
                 a.nama_guru,
-                coalesce(a.nuptk, '') as nuptk,
-                GROUP_CONCAT(b.mapel ORDER BY b.mapel SEPARATOR ', ') as mapel_guru,
+                COALESCE(a.nuptk, '') as nuptk,
+                COALESCE(GROUP_CONCAT(DISTINCT mp.mata_pelajaran ORDER BY mp.mata_pelajaran SEPARATOR ', '), '') as mapel_guru,
                 a.jabatan,
                 a.alamat_guru,
                 a.tlp_guru,
                 a.email_guru
                 from tb_guru a
-                left join tb_jadwal_mapel b on a.id_guru = b.id_guru
-                group by a.id_guru, a.nama_guru";
+                left join tb_jadwal_mapel j on a.id_guru = j.id_guru
+                left join tb_mata_pelajaran mp on mp.id = j.id_mapel
+                group by a.id_guru, a.no_guru, a.nama_guru, a.nuptk, a.jabatan, a.alamat_guru, a.tlp_guru, a.email_guru";
                 $exec = $connect->query($getGuru);
                 $dataguru = [];
                 while($row = $exec->fetch_assoc()){

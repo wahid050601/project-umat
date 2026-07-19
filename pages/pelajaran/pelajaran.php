@@ -159,22 +159,25 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="mapel">Mata Pelajaran</label>
-                    <select class="form-control form-control-sm" id="mapel">
+                    <select class="form-control form-control-sm" id="addjadwalmapel">
                         <option value="">_pilih mata pelajaran_</option>
                     </select>
                 </div>
                 <div class="form-group mt-2">
-                    <label for="jamMulai">Jam Mulai</label>
-                    <input type="time" class="form-control form-control-sm" id="jamMulai">
+                    <label for="jamMulai">Jam</label>
+                    <select type="time" class="form-control form-control-sm" id="jadwaljam">
+                    </select>
                 </div>
                 <div class="form-group mt-2">
-                    <label for="jamSelesai">Jam Selesai</label>
-                    <input type="time" class="form-control form-control-sm" id="jamSelesai">
+                    <label for="jamMulai">Guru Mapel</label>
+                    <select class="form-control form-control-sm" id="jadwalgurumapel">
+                        <option value="">_pilih guru mapel_</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="saveJadwalBtn">Save changes</button>
             </div>
         </div>
     </div>
@@ -189,6 +192,8 @@ window.dataGuru = [];
 window.dataMapel = [];
 window.dataRombel = [];
 window.dataJadwal = [];
+window.activeEditJadwalId = null;
+window.pendingEditJadwal = null;
 
 
 // first hide render jadwal
@@ -227,16 +232,73 @@ $('#filterbtn').on('click', function(){
 
 /* CRUD function */
 function loadguru(){
-    $.ajax({
+    return $.ajax({
         url: "services/basic-load.php",
         method: "POST",
         data: {
             action: "getDataGuru",
-            column: "id,nama_guru"
+            column: "id_guru,nama_guru"
         },
         success: function(res){
             let response = JSON.parse(res);
-            window.dataGuru = response.data;
+            window.dataGuru = response.data || [];
+
+            if(response.status == "success"){
+                let options = `<option value="">_pilih guru mapel_</option>`;
+                response.data.forEach(function(guru){
+                    options += `<option value="${guru.id_guru}">${guru.nama_guru}</option>`;
+                });
+                $('#jadwalgurumapel').html(options);
+            }
+        },
+        error: function(err){
+            alertJadwal("error", "Error", "Error : "+ err.statusText);
+        }
+    });
+}
+function loadmapel(idkelas = ''){
+    return $.ajax({
+        url: "services/basic-load.php",
+        method: "POST",
+        data: {
+            action: "getDataMapel",
+            idkelas: idkelas
+        },
+        success: function(res){
+            let response = JSON.parse(res);
+            window.dataMapel = response.data || [];
+
+            if(response.status == "success"){
+                let options = `<option value="">_pilih mata pelajaran_</option>`;
+                response.data.forEach(function(mapel){
+                    options += `<option value="${mapel.id}">${mapel.mata_pelajaran}</option>`;
+                });
+                $('#addjadwalmapel').html(options);
+            }
+        },
+        error: function(err){
+            alertJadwal("error", "Error", "Error : "+ err.statusText);
+        }
+    });
+}
+function loadjam(){
+    return $.ajax({
+        url: "services/basic-load.php",
+        method: "POST",
+        data: {
+            action: "getDataJamBelajar"
+        },
+        success: function(res){
+            let response = JSON.parse(res);
+            window.dataJam = response.data || [];
+
+            if(response.status == "success"){
+                let options = `<option value="">_pilih jam_</option>`;
+                response.data.forEach(function(jam){
+                    options += `<option value="${jam.id}">${jam.label} (${jam.jam_mulai} - ${jam.jam_selesai})</option>`;
+                });
+                $('#jadwaljam').html(options);
+            }
         },
         error: function(err){
             alertJadwal("error", "Error", "Error : "+ err.statusText);
@@ -296,7 +358,12 @@ function loadjadwal(idkelas, tprombel){
                 let mapelHtml = '';
                 jadwal[h].forEach(function(j){
                     let istirahat = j.istirahat == 1 ? "bg-warning" : "bg-primary";
-                    mapelHtml += `<span class="badge ${istirahat} mapel-view">${j.mata_pelajaran}</span>`;
+                    mapelHtml += `
+                        <div class="d-flex align-items-center justify-content-between gap-1 mb-2">
+                            <span class="badge ${istirahat} mapel-view">${j.mata_pelajaran}</span>
+                            <span class="badge bg-secondary" title="Edit Jadwal" style="cursor: pointer;" onclick="editJadwalItem('${j.id_jadwal}', '${j.hari}', '${j.id_mapel}', '${j.id_waktu}', '${j.id_guru}')"><i class="bi bi-pencil-square"></i></span>
+                        </div>
+                    `;
                 });
 
                 if(jadwal[h].length == 0){
@@ -317,9 +384,99 @@ function loadjadwal(idkelas, tprombel){
 
 
 function editJadwal(hari){
+    let idkelas = $('#filterkelas').val();
+
+    if(!idkelas){
+        alertJadwal("info", "Info", "Silahkan pilih kelas terlebih dahulu!");
+        return;
+    }
+
+    window.activeEditJadwalId = null;
+    window.pendingEditJadwal = null;
+    $('#saveJadwalBtn').text('Save changes');
+    $('#addjadwalmapel').val('');
+    $('#jadwaljam').val('');
+    $('#jadwalgurumapel').val('');
+
     $('.hari-title').text(hari.toUpperCase());
+    loadmapel(idkelas);
+    loadjam();
+    loadguru();
     $('#modalAddJadwal').modal('show');
 }
+
+function editJadwalItem(idJadwal, hari, idMapel, idWaktu, idGuru){
+    let idkelas = $('#filterkelas').val();
+
+    if(!idkelas){
+        alertJadwal("info", "Info", "Silahkan pilih kelas terlebih dahulu!");
+        return;
+    }
+
+    window.activeEditJadwalId = idJadwal;
+    window.pendingEditJadwal = {
+        id_mapel: idMapel,
+        id_waktu: idWaktu,
+        id_guru: idGuru
+    };
+
+    $('#saveJadwalBtn').text('Update Jadwal');
+    $('.hari-title').text(hari.toUpperCase());
+
+    $.when(
+        loadmapel(idkelas),
+        loadjam(),
+        loadguru()
+    ).done(function(){
+        if(!window.pendingEditJadwal){
+            return;
+        }
+
+        $('#addjadwalmapel').val(window.pendingEditJadwal.id_mapel);
+        $('#jadwaljam').val(window.pendingEditJadwal.id_waktu);
+        $('#jadwalgurumapel').val(window.pendingEditJadwal.id_guru);
+        $('#modalAddJadwal').modal('show');
+    });
+}
+
+$('#saveJadwalBtn').on('click', function(){
+    let idkelas = $('#filterkelas').val();
+    let hari = $('.hari-title').text().trim().toLowerCase();
+    let idMapel = $('#addjadwalmapel').val();
+    let idWaktu = $('#jadwaljam').val();
+    let idGuru = $('#jadwalgurumapel').val();
+
+    if(!idkelas || !hari || !idMapel || !idWaktu || !idGuru){
+        alertJadwal("warning", "Warning", "Harap lengkapi semua form jadwal");
+        return;
+    }
+
+    $.ajax({
+        url: "pages/pelajaran/pelajaran-func-data.php",
+        method: "POST",
+        data: {
+            action: "saveJadwalMapel",
+            id_jadwal: window.activeEditJadwalId || '',
+            hari: hari,
+            id_kelas: idkelas,
+            id_mapel: idMapel,
+            id_waktu: idWaktu,
+            id_guru: idGuru
+        },
+        success: function(res){
+            let response = JSON.parse(res);
+            alertJadwal(response.status, response.status == 'success' ? 'Success' : 'Info', response.info);
+
+            if(response.status == 'success'){
+                $('#modalAddJadwal').modal('hide');
+                loadjadwal(idkelas, $('#filterkelas').find(':selected').data('tprombel'));
+            }
+        },
+        error: function(err){
+            alertJadwal("error", "Error", "Error : "+ err.statusText);
+        }
+    });
+});
 
 
 
