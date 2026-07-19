@@ -145,7 +145,7 @@
                     <img src="assets/img/logo_yaj.jpg" alt="logo" style="width:20%;">
                     </body>
                     <h5 class="card-title text-center pb-0 fs-4">SISTEM INFORMASI AKADEMIK</h5>
-                    <p class="text-center small">Masukkan username & password untuk login</p>
+                    <p class="text-center small">Masukkan username & password untuk login admin/guru</p>
                   </div>
 
                   <form class="row g-3 needs-validation" method="POST" action="">
@@ -173,8 +173,9 @@
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit" name="btnlogin" id="btnlogin">LOGIN</button>
                     </div>
-                    <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                    <div class="col-12 text-center">
+                      <hr>
+                      <p class="small mb-2">Login siswa? <a href="siswa/index.php">Klik di sini</a></p>
                     </div>
                   </form>
 
