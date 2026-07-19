@@ -14,8 +14,9 @@
 
     $usr = $_POST["username"];
     $pas = $_POST["password"];
+    $hashPas = md5($pas);
 
-    $result = mysqli_query($connection, "SELECT * FROM tb_user WHERE username='$usr' AND password='$pas'");
+    $result = mysqli_query($connection, "SELECT * FROM tb_user WHERE username='$usr' AND (password='$pas' OR password='$hashPas')");
     
     if (mysqli_num_rows($result) === 1) {
         
@@ -24,6 +25,8 @@
         if ($row['level'] == 'admin') {
             
             $_SESSION['berhasil_login'] = true;
+            $_SESSION['id'] = $row['id'];
+            $_SESSION['username'] = $row['username'];
             $_SESSION['level'] = $row['level'];
             $_SESSION['nama'] = $row['nama'];
             header("Location: index.php");
@@ -32,6 +35,8 @@
         }elseif($row['level'] == 'guru'){
 
             $_SESSION['berhasil_login'] = true;
+            $_SESSION['id'] = $row['id'];
+            $_SESSION['username'] = $row['username'];
             $_SESSION['level'] = $row['level'];
             $_SESSION['nama'] = $row['nama'];
             header("Location: index.php");
@@ -39,6 +44,8 @@
 
         }else{
             $_SESSION['berhasil_login'] = true;
+            $_SESSION['id'] = $row['id'];
+            $_SESSION['username'] = $row['username'];
             $_SESSION['level'] = $row['level'];
             $_SESSION['nama'] = $row['nama'];
             header("Location: index.php");

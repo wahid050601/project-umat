@@ -10,6 +10,31 @@ require "function/database.php" ;
 $koneksi = mysqli_connect ($host, $user, $pass, $database) ;
 
 $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
+
+$userDisplayName = isset($_SESSION['nama']) ? $_SESSION['nama'] : 'User';
+$userProfileImage = 'assets/img/logo_yaj.jpg';
+
+if (!empty($_SESSION['id'])) {
+    $userId = (int) $_SESSION['id'];
+    $userProfileQuery = mysqli_query($koneksi, "SELECT nama FROM tb_user WHERE id = $userId");
+    if ($userProfileQuery && mysqli_num_rows($userProfileQuery) === 1) {
+        $userProfileRow = mysqli_fetch_assoc($userProfileQuery);
+        if (!empty($userProfileRow['nama'])) {
+            $userDisplayName = $userProfileRow['nama'];
+        }
+    }
+
+    $imageColumnCheck = mysqli_query($koneksi, "SHOW COLUMNS FROM tb_user LIKE 'image'");
+    if ($imageColumnCheck && mysqli_num_rows($imageColumnCheck) === 1) {
+        $imageQuery = mysqli_query($koneksi, "SELECT image FROM tb_user WHERE id = $userId");
+        if ($imageQuery && mysqli_num_rows($imageQuery) === 1) {
+            $imageRow = mysqli_fetch_assoc($imageQuery);
+            if (!empty($imageRow['image'])) {
+                $userProfileImage = 'assets/img/profile/' . $imageRow['image'];
+            }
+        }
+    }
+}
 ?>
 
 
@@ -177,17 +202,21 @@ $data_siswa = mysqli_query ($koneksi, "select * from tb_siswa") ;
                 <a class="nav-link nav-icon search-bar-toggle " href="#"><i class="bi bi-search"></i></a>
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/Rivansyah (1).jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">Rivansyah</span>
+                        <img src="<?= htmlspecialchars($userProfileImage) ?>" alt="Profile" class="rounded-circle" onerror="this.onerror=null;this.src='assets/img/logo_yaj.jpg';">
+                        <span class="d-none d-md-block dropdown-toggle ps-2"><?= htmlspecialchars($userDisplayName) ?></span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Rivansyah</h6>
+                            <h6><?= htmlspecialchars($userDisplayName) ?></h6>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="#" onclick="HtmlLoad('pages/profile/profile.php')">
+                                <i class="bi bi-person-circle"></i><span>Lihat Profil</span>
+                            </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="logout.php"><i class="bi bi-box-arrow-right"></i><span>Sign Out</span></a>

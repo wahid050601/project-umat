@@ -1,5 +1,5 @@
 <?php
-require "../../function/database.php";
+require_once  __DIR__ . "/../../function/database.php";
 
 $action = $_POST["action"] ?? null;
 
