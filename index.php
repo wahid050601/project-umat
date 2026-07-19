@@ -181,6 +181,27 @@ if (!empty($_SESSION['id'])) {
     color: #012970;
     font-weight: 700;
   }
+
+  .logout-confirm-popup {
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(1, 41, 112, 0.18);
+  }
+
+  .logout-confirm-popup .swal2-title {
+    color: #012970;
+    font-weight: 700;
+  }
+
+  .logout-confirm-popup .swal2-confirm {
+    background-color: #4154f1 !important;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .logout-confirm-popup .swal2-cancel {
+    border-radius: 10px;
+    font-weight: 600;
+  }
 </style>
 
 <body>
@@ -219,7 +240,7 @@ if (!empty($_SESSION['id'])) {
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="logout.php"><i class="bi bi-box-arrow-right"></i><span>Sign Out</span></a>
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php" onclick="confirmLogout(event)"><i class="bi bi-box-arrow-right"></i><span>Sign Out</span></a>
                         </li>
                     </ul>
                 </li>
@@ -259,7 +280,7 @@ if (!empty($_SESSION['id'])) {
 
             <li class="nav-item"><a class="nav-link collapsed" href="#" onclick="HtmlLoad('pages/profile/profile.php')"><i class="bi bi-person-fill"></i><span>PROFIL USER</span></a></li>
 
-            <li class="nav-item"><a class="nav-link collapsed" href="logout.php"><i class="bi bi-power"></i><span>LOGOUT</span></a></li>
+            <li class="nav-item"><a class="nav-link collapsed" href="logout.php" onclick="confirmLogout(event)"><i class="bi bi-power"></i><span>LOGOUT</span></a></li>
         </ul>
     </aside><!-- End Sidebar-->
 
@@ -425,6 +446,27 @@ if (!empty($_SESSION['id'])) {
         function HtmlLoad(url) {
             $('.tampil').empty();
             $('.tampil').load(url);
+        }
+
+        function confirmLogout(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Konfirmasi Logout',
+                text: 'Apakah Anda yakin ingin keluar dari aplikasi?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4154f1',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Logout',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    popup: 'logout-confirm-popup'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'logout.php';
+                }
+            });
         }
 
         function loadDashboard(){
