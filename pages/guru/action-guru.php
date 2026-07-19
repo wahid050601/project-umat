@@ -19,7 +19,7 @@ if(isset($_POST["action"])){
                 a.tlp_guru,
                 a.email_guru
                 from tb_guru a
-                left join tb_jadwal_mapel b on a.id_guru = b.guru_mapel
+                left join tb_jadwal_mapel b on a.id_guru = b.id_guru
                 group by a.id_guru, a.nama_guru";
                 $exec = $connect->query($getGuru);
                 $dataguru = [];
