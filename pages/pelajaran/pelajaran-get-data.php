@@ -92,6 +92,51 @@ if(isset($action)){
         // break;
 
 
+        case "getMapelAkademik" :
+            try {
+                $queryMapel = "
+                select
+                m.id,
+                m.mata_pelajaran,
+                r.ket_rombel as kelas
+                from tb_mata_pelajaran m
+                left join tb_rombel r on r.id = cast(m.kelas as unsigned)
+                order by m.id asc";
+
+                $queryRombel = "
+                select id, ket_rombel
+                from tb_rombel
+                order by ket_rombel asc";
+
+                $execMapel = $connect->query($queryMapel);
+                $execRombel = $connect->query($queryRombel);
+
+                $dataMapelAkademik = [];
+                while ($row = $execMapel->fetch_assoc()) {
+                    $dataMapelAkademik[] = $row;
+                }
+
+                $dataRombel = [];
+                while ($row = $execRombel->fetch_assoc()) {
+                    $dataRombel[] = $row;
+                }
+
+                echo json_encode([
+                    "status" => "success",
+                    "info" => "Data Mata Pelajaran Akademik Berhasil di Load",
+                    "datamapelakademik" => $dataMapelAkademik,
+                    "datarombel" => $dataRombel
+                ]);
+            } catch (\Throwable $th) {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Error: ". $th->getMessage(),
+                    "datamapelakademik" => [],
+                    "datarombel" => []
+                ]);
+            }
+        break;
+
         // New Method
         case "getJadwalByKelas" :
             $idkelas = $_POST["idkelas"];
