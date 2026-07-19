@@ -23,6 +23,10 @@
         overflow: hidden;
         width: 95%;
     }
+
+    .jadwal-action-btn {
+        cursor: pointer;
+    }
 </style>
 
 
@@ -298,6 +302,7 @@ function loadjam(){
                     options += `<option value="${jam.id}">${jam.label} (${jam.jam_mulai} - ${jam.jam_selesai})</option>`;
                 });
                 $('#jadwaljam').html(options);
+                applyDefaultJamSelection();
             }
         },
         error: function(err){
@@ -340,28 +345,40 @@ function loadjadwal(idkelas, tprombel){
             idkelas : idkelas
         },
         success: function(res){
-            // data jadwal
             let response = JSON.parse(res);
             let jadwal = response.datajadwal;
+
+            let hari = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
+            hari.forEach(function(h){
+                jadwal[h] = (jadwal[h] || []).sort(function(a, b){
+                    return Number(a.id_waktu) - Number(b.id_waktu);
+                });
+            });
+
             window.dataJadwal = jadwal;
 
-            // hari
-            let hari = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
-
-            // set default jadwal to alert
             let alertJadwal = `
             <div class="text-center">
                 <i class="bi bi-journal-x"></i>
                 <p>jadwal kosong</p>
             </div>`;
+
             hari.forEach(function(h){
                 let mapelHtml = '';
+                let lastIdJadwal = getLatestJadwalIdByHari(h);
+
                 jadwal[h].forEach(function(j){
                     let istirahat = j.istirahat == 1 ? "bg-warning" : "bg-primary";
+                    let mapelLabel = j.istirahat == 1 ? "ISTIRAHAT" : (j.mata_pelajaran || '-');
+                    let isNewestItem = String(j.id_jadwal) === String(lastIdJadwal);
+
                     mapelHtml += `
                         <div class="d-flex align-items-center justify-content-between gap-1 mb-2">
-                            <span class="badge ${istirahat} mapel-view">${j.mata_pelajaran}</span>
-                            <span class="badge bg-secondary" title="Edit Jadwal" style="cursor: pointer;" onclick="editJadwalItem('${j.id_jadwal}', '${j.hari}', '${j.id_mapel}', '${j.id_waktu}', '${j.id_guru}')"><i class="bi bi-pencil-square"></i></span>
+                            <span class="badge ${istirahat} mapel-view">${mapelLabel}</span>
+                            <div class="d-flex align-items-center gap-1">
+                                <span class="badge bg-secondary jadwal-action-btn" title="Edit Jadwal" onclick="editJadwalItem('${j.id_jadwal}', '${j.hari}', '${j.id_mapel}', '${j.id_waktu}', '${j.id_guru}')"><i class="bi bi-pencil-square"></i></span>
+                                ${isNewestItem ? `<span class="badge bg-danger jadwal-action-btn" title="Hapus Jadwal Terbaru" onclick="deleteJadwalItem('${j.id_jadwal}', '${j.hari}')"><i class="bi bi-trash"></i></span>` : ''}
+                            </div>
                         </div>
                     `;
                 });
@@ -372,8 +389,7 @@ function loadjadwal(idkelas, tprombel){
                     $('#jadwal'+h).html(mapelHtml);
                 }
             });
-            
-            // render jadwal
+
             showJadwalPage(true);
         },
         error: function(err){
@@ -399,10 +415,17 @@ function editJadwal(hari){
     $('#jadwalgurumapel').val('');
 
     $('.hari-title').text(hari.toUpperCase());
-    loadmapel(idkelas);
-    loadjam();
-    loadguru();
-    $('#modalAddJadwal').modal('show');
+
+    $.when(
+        loadmapel(idkelas),
+        loadjam(),
+        loadguru()
+    ).done(function(){
+        const nextJamId = getNextAvailableJamIdForHari(hari);
+        $('#jadwaljam').val(nextJamId);
+        syncJamFormState();
+        $('#modalAddJadwal').modal('show');
+    });
 }
 
 function editJadwalItem(idJadwal, hari, idMapel, idWaktu, idGuru){
@@ -435,9 +458,14 @@ function editJadwalItem(idJadwal, hari, idMapel, idWaktu, idGuru){
         $('#addjadwalmapel').val(window.pendingEditJadwal.id_mapel);
         $('#jadwaljam').val(window.pendingEditJadwal.id_waktu);
         $('#jadwalgurumapel').val(window.pendingEditJadwal.id_guru);
+        syncJamFormState();
         $('#modalAddJadwal').modal('show');
     });
 }
+
+$('#jadwaljam').on('change', function(){
+    syncJamFormState();
+});
 
 $('#saveJadwalBtn').on('click', function(){
     let idkelas = $('#filterkelas').val();
@@ -445,8 +473,15 @@ $('#saveJadwalBtn').on('click', function(){
     let idMapel = $('#addjadwalmapel').val();
     let idWaktu = $('#jadwaljam').val();
     let idGuru = $('#jadwalgurumapel').val();
+    let jamInfo = getJamById(idWaktu);
+    let isIstirahat = jamInfo && Number(jamInfo.istirahat) === 1;
 
-    if(!idkelas || !hari || !idMapel || !idWaktu || !idGuru){
+    if(!idkelas || !hari || !idWaktu){
+        alertJadwal("warning", "Warning", "Harap lengkapi semua form jadwal");
+        return;
+    }
+
+    if(!isIstirahat && (!idMapel || !idGuru)){
         alertJadwal("warning", "Warning", "Harap lengkapi semua form jadwal");
         return;
     }
@@ -459,9 +494,9 @@ $('#saveJadwalBtn').on('click', function(){
             id_jadwal: window.activeEditJadwalId || '',
             hari: hari,
             id_kelas: idkelas,
-            id_mapel: idMapel,
+            id_mapel: isIstirahat ? 0 : idMapel,
             id_waktu: idWaktu,
-            id_guru: idGuru
+            id_guru: isIstirahat ? 0 : idGuru
         },
         success: function(res){
             let response = JSON.parse(res);
@@ -482,6 +517,116 @@ $('#saveJadwalBtn').on('click', function(){
 
 
 /* Utility function */
+function getJamById(idJam){
+    return (window.dataJam || []).find(function(jam){
+        return String(jam.id) === String(idJam);
+    });
+}
+
+function getLatestJadwalIdByHari(hari){
+    if(!window.dataJadwal || !window.dataJadwal[hari]){
+        return null;
+    }
+
+    let items = window.dataJadwal[hari].slice().sort(function(a, b){
+        return Number(a.id_jadwal) - Number(b.id_jadwal);
+    });
+
+    return items.length ? items[items.length - 1].id_jadwal : null;
+}
+
+function getNextAvailableJamIdForHari(hari){
+    if(!window.dataJam || window.dataJam.length === 0){
+        return '';
+    }
+
+    let currentItems = (window.dataJadwal[hari] || []).slice().sort(function(a, b){
+        return Number(a.id_waktu) - Number(b.id_waktu);
+    });
+
+    if(currentItems.length === 0){
+        return window.dataJam[0].id;
+    }
+
+    let nextId = Number(currentItems[currentItems.length - 1].id_waktu) + 1;
+    let match = window.dataJam.find(function(jam){
+        return Number(jam.id) === nextId;
+    });
+
+    return match ? match.id : '';
+}
+
+function applyDefaultJamSelection(){
+    let hari = $('.hari-title').text().trim().toLowerCase();
+    if(!hari){
+        return;
+    }
+
+    let nextJamId = getNextAvailableJamIdForHari(hari);
+    if(nextJamId){
+        $('#jadwaljam').val(nextJamId);
+    }
+    syncJamFormState();
+}
+
+function syncJamFormState(){
+    let jamId = $('#jadwaljam').val();
+    let jamInfo = getJamById(jamId);
+    let isIstirahat = jamInfo && Number(jamInfo.istirahat) === 1;
+
+    $('#addjadwalmapel').prop('disabled', isIstirahat);
+    $('#jadwalgurumapel').prop('disabled', isIstirahat);
+
+    if(isIstirahat){
+        $('#addjadwalmapel').val('');
+        $('#jadwalgurumapel').val('');
+    }
+}
+
+function deleteJadwalItem(idJadwal, hari){
+    let idkelas = $('#filterkelas').val();
+
+    if(!idkelas){
+        alertJadwal("info", "Info", "Silahkan pilih kelas terlebih dahulu!");
+        return;
+    }
+
+    Swal.fire({
+        title: 'Konfirmasi Hapus Jadwal',
+        text: 'Hapus jadwal paling baru pada hari ' + hari.toUpperCase() + '?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal'
+    }).then(function(result){
+        if(!result.isConfirmed){
+            return;
+        }
+
+        $.ajax({
+            url: "pages/pelajaran/pelajaran-func-data.php",
+            method: "POST",
+            data: {
+                action: "deleteJadwalMapel",
+                id_jadwal: idJadwal,
+                id_kelas: idkelas,
+                hari: hari
+            },
+            success: function(res){
+                let response = JSON.parse(res);
+                alertJadwal(response.status, response.status == 'success' ? 'Success' : 'Info', response.info);
+
+                if(response.status == 'success'){
+                    loadjadwal(idkelas, $('#filterkelas').find(':selected').data('tprombel'));
+                }
+            },
+            error: function(err){
+                alertJadwal("error", "Error", "Error : "+ err.statusText);
+            }
+        });
+    });
+}
+
 function showJadwalPage(isShow=false){
     if(!isShow){
         $('#alertInfo').show();

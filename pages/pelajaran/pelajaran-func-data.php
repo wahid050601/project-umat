@@ -13,7 +13,36 @@ if (isset($action)) {
             $idWaktu = $_POST["id_waktu"] ?? null;
             $idGuru = $_POST["id_guru"] ?? null;
 
-            if (empty($hari) || empty($idKelas) || empty($idMapel) || empty($idWaktu) || empty($idGuru)) {
+            if (empty($hari) || empty($idKelas) || empty($idWaktu)) {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Semua field jadwal harus diisi"
+                ]);
+                return;
+            }
+
+            $jamQuery = $connect->prepare("select istirahat from tb_jam_belajar where id = ?");
+            $jamQuery->bind_param("i", $idWaktu);
+            $jamQuery->execute();
+            $jamQuery->bind_result($isRestSlot);
+            $jamQuery->fetch();
+            $jamQuery->close();
+
+            if ($isRestSlot === null) {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Jam belajar tidak valid"
+                ]);
+                return;
+            }
+
+            $isRestSlot = (int) $isRestSlot;
+            if ($isRestSlot === 1) {
+                $idMapel = 0;
+                $idGuru = 0;
+            }
+
+            if (!$isRestSlot && (empty($idMapel) || empty($idGuru))) {
                 echo json_encode([
                     "status" => "error",
                     "info" => "Semua field jadwal harus diisi"
@@ -109,6 +138,63 @@ if (isset($action)) {
                 echo json_encode([
                     "status" => "success",
                     "info" => "Mata pelajaran akademik berhasil ditambahkan"
+                ]);
+            } else {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Error : " . $stmt->error
+                ]);
+            }
+            $stmt->close();
+            break;
+
+        case "deleteJadwalMapel" :
+            $idJadwal = $_POST["id_jadwal"] ?? null;
+            $idKelas = $_POST["id_kelas"] ?? null;
+            $hari = strtolower(trim($_POST["hari"] ?? ""));
+
+            if (empty($idJadwal) || empty($idKelas) || empty($hari)) {
+                echo json_encode([
+                    "status" => "error",
+                    "info" => "Data jadwal tidak valid"
+                ]);
+                break;
+            }
+
+            $hari = ucfirst($hari);
+            $latestQuery = "
+                select id_jadwal
+                from tb_jadwal_mapel
+                where hari = ?
+                  and id_kelas = ?
+                order by id_jadwal desc
+                limit 1
+            ";
+
+            $stmtLatest = $connect->prepare($latestQuery);
+            $stmtLatest->bind_param("si", $hari, $idKelas);
+            $stmtLatest->execute();
+            $stmtLatest->bind_result($latestIdJadwal);
+            $stmtLatest->fetch();
+            $stmtLatest->close();
+
+            if ($latestIdJadwal !== (int) $idJadwal) {
+                echo json_encode([
+                    "status" => "warning",
+                    "info" => "Hanya jadwal paling baru yang bisa dihapus"
+                ]);
+                break;
+            }
+
+            $query = "delete from tb_jadwal_mapel where id_jadwal = ?";
+            $stmt = $connect->prepare($query);
+            $stmt->bind_param("i", $idJadwal);
+            $exec = $stmt->execute();
+
+            if ($exec) {
+                echo json_encode([
+                    "status" => "success",
+                    "info" => "Jadwal berhasil dihapus"
                 ]);
             } else {
                 echo json_encode([
